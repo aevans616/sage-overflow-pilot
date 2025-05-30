@@ -1,9 +1,14 @@
 # Todo
 
-[] Setup Routing
-[] Setup Supabase
-[] Setup Redux
-[] Setup Bootstrap || Shadcn
+#### [] Setup Routing
+
+#### [] Setup Supabase
+
+#### [] Setup Redux
+
+#### [x] Setup Shadcn
+
+#### [] Netlify || AWS
 
 # React + TypeScript + Vite
 
