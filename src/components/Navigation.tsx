@@ -8,11 +8,11 @@ export default function Navigation() {
   return (
     <Navbar expand='lg' className='mb-5 bg-body-tertiary'>
       <Container>
-        <Navbar.Brand href='/home'>Sage Overflow</Navbar.Brand>
+        <Navbar.Brand href='/'>Sage Overflow</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse>
           <Nav className='me-auto'>
-            <Nav.Link href='/home'>Home</Nav.Link>
+            <Nav.Link href='/'>Home</Nav.Link>
             <Nav.Link href='/articles'>Articles</Nav.Link>
             <Nav.Link href='/categories'>Categories</Nav.Link>
             <Nav.Link href='/contact'>Contact</Nav.Link>
