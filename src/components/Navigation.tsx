@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export default function Navigation() {
   return (
-    <Navbar expand='lg' className='bg-body-tertiary'>
+    <Navbar expand='lg' className='mb-5 bg-body-tertiary'>
       <Container>
         <Navbar.Brand href='/home'>Sage Overflow</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
