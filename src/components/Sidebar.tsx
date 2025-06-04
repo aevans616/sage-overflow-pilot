@@ -1,41 +1,58 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
+import SidebarItem from './SidebarItem';
 
 export default function Sidebar() {
   return (
     <div className='sidebar-wrapper me-4 pt-2 ps-2 w-25 min-w-fit d-flex flex-column justify-content-start align-items-start bg-body-tertiary'>
       <h3>Common Articles</h3>
-      <div className='app-section-wrapper mb-4 d-flex flex-column justify-content-start align-items-start'>
-        <h4 className='mt-4'>Clever</h4>
-        <Nav.Link href='/'>Login</Nav.Link>
-        <Nav.Link href='/'>Password Reset</Nav.Link>
-        <Nav.Link href='/'>Missing Apps</Nav.Link>
-        <Nav.Link href='/'>Sections & Enrollments</Nav.Link>
-      </div>
 
-      <div className='app-section-wrapper mb-4 d-flex flex-column justify-content-start align-items-start'>
-        <h4 className='mt-4'>Canvas</h4>
-        <Nav.Link href='/'>Editing Modules and Assignments</Nav.Link>
-        <Nav.Link href='/'>Using the Rich Content Editor</Nav.Link>
-        <Nav.Link href='/'>Logging in to the mobile app</Nav.Link>
-        <Nav.Link href='/'>Troubleshooting browser issues</Nav.Link>
-      </div>
+      <SidebarItem
+        appTitle='Clever'
+        article1='Login'
+        article_1_link=''
+        article2='Password Reset'
+        article_2_link=''
+        article3='Missing Apps'
+        article_3_link=''
+        article4='Sections & Enrollments'
+        article_4_link=''
+      />
 
-      <div className='app-section-wrapper mb-4 d-flex flex-column justify-content-start align-items-start'>
-        <h4 className='mt-4'>Hapara</h4>
-        <Nav.Link href='/'>Login</Nav.Link>
-        <Nav.Link href='/'>Password Reset</Nav.Link>
-        <Nav.Link href='/'>Missing Apps</Nav.Link>
-        <Nav.Link href='/'>Sections & Enrollments</Nav.Link>
-      </div>
+      <SidebarItem
+        appTitle='Canvas'
+        article1='Editing Modules and Assignments'
+        article_1_link=''
+        article2='Using the Rich Content Editor'
+        article_2_link=''
+        article3='Logging in to the mobile app'
+        article_3_link=''
+        article4='Troubleshooting browser issues'
+        article_4_link=''
+      />
 
-      <div className='app-section-wrapper mb-4 d-flex flex-column justify-content-start align-items-start'>
-        <h4 className='mt-4'>Bright Thinker</h4>
-        <Nav.Link href='/'>Login</Nav.Link>
-        <Nav.Link href='/'>Password Reset</Nav.Link>
-        <Nav.Link href='/'>Missing Apps</Nav.Link>
-        <Nav.Link href='/'>Sections & Enrollments</Nav.Link>
-      </div>
+      <SidebarItem
+        appTitle='Hapara'
+        article1='...'
+        article_1_link=''
+        article2='...'
+        article_2_link=''
+        article3='...'
+        article_3_link=''
+        article4='...'
+        article_4_link=''
+      />
+
+      <SidebarItem
+        appTitle='Bright Thinker'
+        article1='...'
+        article_1_link=''
+        article2='...'
+        article_2_link=''
+        article3='...'
+        article_3_link=''
+        article4='...'
+        article_4_link=''
+      />
     </div>
   );
 }
