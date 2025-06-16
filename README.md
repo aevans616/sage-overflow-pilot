@@ -1,12 +1,13 @@
 # TODO
 
 - [x] Setup Supabase
-      Note Enable Row Level Security (RLS) is disabled
-- [] Populate Articles in Supabase
+      Note Enable Row Level Security (RLS) is enabled
+- [] Populate Articles Complete in Supabase
 - [x] Install Router
 - [] Complete setup of routes
+  CRUD ops
 - [] Create
-- [] Read
+- [x] Read
 - [] Update
 - [] Delete
 

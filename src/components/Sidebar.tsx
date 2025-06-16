@@ -3,10 +3,14 @@ import SidebarItem from './SidebarItem';
 
 export default function Sidebar() {
   return (
-    <div className='sidebar-wrapper me-4 pt-2 ps-2 w-25 min-w-fit d-flex flex-column justify-content-start align-items-start bg-body-tertiary'>
+    <div
+      style={{ boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)' }}
+      className='sidebar-wrapper me-4 pt-2 ps-2 w-25 min-w-fit d-flex flex-column justify-content-start align-items-start bg-success  '
+    >
       <h3>Common Articles</h3>
 
       <SidebarItem
+        // style={{ border: '2px solid red' }}
         appTitle='Clever'
         article1='Login'
         article_1_link=''

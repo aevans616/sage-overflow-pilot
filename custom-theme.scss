@@ -1,0 +1,17 @@
+// @import './node_modules/bootstrap/scss/variables';
+// @import './node_modules/bootstrap/scss/mixins';
+// @import './node_modules/bootstrap/scss/functions';
+
+$primary: #83a18a;
+$secondary: #1c476c;
+$success: #f2f2f5;
+
+// $custom-colors: (
+//   'mypink': rgb(255, 197, 206),
+// );
+
+// $theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import './node_modules/bootstrap/scss/bootstrap';
+
+// Then add additional custom code here

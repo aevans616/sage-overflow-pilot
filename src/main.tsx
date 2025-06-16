@@ -4,10 +4,13 @@ import App from './App.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import Contact from './pages/Contact.tsx';
 import Articles from './pages/Articles.tsx';
+import SingleArticle from './pages/SingleArticle.tsx';
 import Categories from './pages/Categories.tsx';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Navigation from './components/Navigation.tsx';
 import Sidebar from './components/Sidebar.tsx';
+
+import '../custom-theme.scss';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -18,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/' element={<App />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/articles' element={<Articles />} />
+        <Route path='/singlearticle' element={<SingleArticle />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>
