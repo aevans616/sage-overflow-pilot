@@ -19,7 +19,7 @@ export default function Navigation() {
           alt='sage oak logo'
           style={{ width: '6rem', marginRight: '6.8rem' }}
         />
-        <Navbar.Brand href=''>Sage Overflow</Navbar.Brand>
+        <Navbar.Brand href='/'>Sage Overflow</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse>
           <Nav className='me-auto'>

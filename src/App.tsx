@@ -93,29 +93,35 @@ function App() {
           style={{
             display: 'flex',
             flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
             marginBottom: '2rem',
-            padding: '1rem 2rem',
+            padding: '1rem 0rem 1rem 2rem',
             // width: 'fit-content',
             // maxWidth: '100%',
+            // border: '2px solid red',
           }}
         >
-          {article.map((entry: any) => (
-            <>
-              <ArticleCardSmall key={entry.id} cardTitle={entry.title} />
-            </>
+          {/* //^ Displays first 3 database entries for now */}
+          {/* //TODO? add functionality to display recently accessed content */}
+
+          {article.slice(0, 3).map((entry: any) => (
+            <ArticleCardSmall key={entry.id} cardTitle={entry.title} />
           ))}
         </div>
         {/* //* Row 2 */}
         <h2 style={{ padding: '0 2rem', textAlign: 'left' }}>
-          Trending articles
+          Popular articles
         </h2>
         <div
           className='row-2-wrapper'
           style={{
             display: 'flex',
             flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
             marginBottom: '2rem',
@@ -125,11 +131,11 @@ function App() {
             backgroundColor: '#f0f0f3',
           }}
         >
-          {article.map((entry: any) => (
-            <>
+          {article.map((entry: any) =>
+            entry.view_count >= 150 ? (
               <ArticleCardSmall key={entry.id} cardTitle={entry.title} />
-            </>
-          ))}
+            ) : null
+          )}
         </div>
       </div>
     </div>

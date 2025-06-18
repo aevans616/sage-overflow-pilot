@@ -1,11 +1,8 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const sampleContent = {
-  title: 'How to reset your password.',
-  content: 'dummy text',
-  src: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-};
+
+//TODO truncate title text after X amount of characters
 
 export default function ArticleCard(props) {
   return (
@@ -21,17 +18,26 @@ export default function ArticleCard(props) {
       }}
     >
       <Card.Img
-        style={{ width: '227px', height: '154px', borderRadius: '10px' }}
+        style={{
+          margin: '0',
+          width: '227px',
+          height: '154px',
+          borderRadius: '10px',
+        }}
         variant='top'
-        src={props.imgURL || sampleContent.src}
+        src={props.imgURL}
         className='img-thumbnail'
       />
-      <Card.Body>
-        <Card.Title>{props.cardTitle || sampleContent.title}</Card.Title>
-        <Card.Text className='text-truncate'>
-          {props.cardContent || sampleContent.content}
-        </Card.Text>
-        <Button variant='outline-primary'>Read Article</Button>
+      <Card.Body style={{ padding: '1rem 0.5rem' }}>
+        <Card.Title
+          style={{ margin: '0 0 1rem 0', fontSize: '18px', fontWeight: '500' }}
+        >
+          {props.cardTitle}
+        </Card.Title>
+        {/* <Card.Text className='text-truncate'>{props.cardContent}</Card.Text> */}
+        <Button variant='outline-primary' onClick={props.handleClick}>
+          Read Article
+        </Button>
       </Card.Body>
     </Card>
   );

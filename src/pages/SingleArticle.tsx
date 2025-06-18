@@ -6,23 +6,22 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-//TODO cant pull up a singular article
-
 export default function SingleArticle(props) {
   const [article, setArticle] = useState([]);
   useEffect(() => {
     getArticle();
   }, []);
 
-  async function getArticle() {
+  async function getArticle(props) {
     const { data } = await supabase.from('article').select();
     setArticle(data);
-    // console.log(data[0].title);
+    console.log(data[0].title);
   }
   console.log(article);
   return (
     <div className='single-article-wrapper'>
-      <h1>{article[0].title}</h1>
+      <h1>{`{TEST ${props.title}}`}</h1>
+      <h1>{`Title: ${article[0].title}`}</h1>
       <div className='author-date'>
         <h6>{`Author: ${props.author}`}</h6>
         <h6>{props.date}</h6>
