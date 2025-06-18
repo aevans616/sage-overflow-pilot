@@ -11,7 +11,7 @@ const customLink = (name: string, styling?: string) => {
   // remove all white spaces
   linkURL = linkURL.replace(' ', '');
 
-  // the URL for home is '', this function recognizes when the home link is pressed and ensures the url is correct
+  //TODO this decision tree will ensure that home, create ticket and report bug links are correct
   if (linkURL === 'home') {
     linkURL = '';
   }
@@ -36,7 +36,9 @@ export default function Navigation() {
           alt='sage oak logo'
           style={{ width: '6rem', marginRight: '6.8rem' }}
         />
-        <Navbar.Brand href='/'>Sage Overflow</Navbar.Brand>
+        <Navbar.Brand className='text-secondary fw-bold' href='/'>
+          Sage Overflow
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse>
           <Nav
@@ -72,6 +74,7 @@ export default function Navigation() {
               }}
               className='links-right-wrapper'
             >
+              {/* //^ link to iiQ create a ticket */}
               {customLink('Create Ticket')}
               {customLink('Report Bug')}
 

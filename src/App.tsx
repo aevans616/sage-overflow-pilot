@@ -2,6 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import CategoryCard from './components/CategoryCard';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -28,18 +29,21 @@ function App() {
   return (
     <div style={{ width: '75%' }} className='home-wrapper'>
       {/* //* Searchbar */}
+
       <Navbar
         style={{
           width: '100%',
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: '1rem',
+          padding: '1rem',
           boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)',
         }}
-        className='bg-body-tertiary'
+        className='bg-primary'
       >
+        <h2 className='mb-4 text-white'>Looking for help?</h2>
         <Form
           style={{
             width: 'auto',
@@ -62,13 +66,17 @@ function App() {
               <Form.Control type='text' placeholder='Search for an article' />
             </Col>
             <Col xs='auto'>
-              <Button type='submit'>Search</Button>
+              <Button
+                style={{
+                  backgroundColor: 'white',
+                }}
+                type='submit'
+              >
+                Search
+              </Button>
             </Col>
           </Row>
         </Form>
-        {/* <Button type='button' variant='outline-primary' className='ms-3'>
-          Report a new issue
-        </Button> */}
       </Navbar>
 
       {/* //& Page Content */}
@@ -80,24 +88,53 @@ function App() {
           gap: '1rem',
           width: '100%',
           maxWidth: '100%',
+
           // padding: '1rem 2rem',
           // border: '2px solid red',
         }}
       >
-        <h2 style={{ padding: ' 0 2rem', textAlign: 'left' }}>
+        {/* //* General Categories */}
+        <h3 style={{ padding: '0 2rem', textAlign: 'left' }}>
+          General Categories
+        </h3>
+        <div
+          className='row-2-wrapper'
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            marginBottom: '2rem',
+            padding: '1.5rem 2rem',
+            backgroundColor: '#f0f0f3',
+          }}
+        >
+          <CategoryCard cardTitle='Clever' />
+          <CategoryCard cardTitle='Canvas' />
+          <CategoryCard cardTitle='Google' />
+          <CategoryCard cardTitle='Adobe' />
+          <CategoryCard cardTitle='Point of Contact' />
+          <CategoryCard cardTitle='Login' />
+          <CategoryCard cardTitle='Bright Thinker' />
+          <CategoryCard cardTitle='Microsoft 365' />
+        </div>
+        {/* //& RECENT ARTICLES */}
+        <h3 style={{ padding: ' 0 2rem', textAlign: 'left' }}>
           Your recent articles
-        </h2>
+        </h3>
         <div
           className='row-1-wrapper'
           style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
             marginBottom: '2rem',
-            padding: '1rem 0rem 1rem 2rem',
+            padding: '1.5rem 0rem 1.5rem 2rem',
             // width: 'fit-content',
             // maxWidth: '100%',
             // border: '2px solid red',
@@ -110,23 +147,22 @@ function App() {
             <ArticleCardSmall key={entry.id} cardTitle={entry.title} />
           ))}
         </div>
-        {/* //* Row 2 */}
-        <h2 style={{ padding: '0 2rem', textAlign: 'left' }}>
+        {/* //* POPULAR ARTICLES */}
+        <h3 style={{ padding: '0 2rem', textAlign: 'left' }}>
           Popular articles
-        </h2>
+        </h3>
         <div
           className='row-2-wrapper'
           style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
             gap: '1rem',
             marginBottom: '2rem',
-            padding: '1rem 2rem',
-            // width: 'fit-content',
-            // maxWidth: '100%',
+            padding: '1.5rem 2rem',
+
             backgroundColor: '#f0f0f3',
           }}
         >
