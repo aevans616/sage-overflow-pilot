@@ -5,6 +5,14 @@
 - [] Populate Articles Complete in Supabase
 - [x] Install Router
 - [] Complete setup of routes
+- [x] Build Home Page
+- [x] Build Articles Page
+- [] Rework Sidebar
+- [] Build Categories Page
+- [] Build Admin Page
+- [x] Add users table to backend
+- [x] Add tags table to backend
+- [] Build Admin Page
   CRUD ops
 - [] Create
 - [x] Read
