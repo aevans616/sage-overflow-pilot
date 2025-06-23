@@ -1,61 +1,67 @@
-import React from 'react';
 import SidebarItem from './SidebarItem';
 
 export default function Sidebar() {
   return (
     <div
-      style={{ boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)' }}
-      className='sidebar-wrapper me-4 pt-2 ps-2 w-25 min-w-fit d-flex flex-column justify-content-start align-items-start bg-success  '
+      style={{
+        width: '25vw',
+        minWidth: '25vw',
+        maxWidth: '25px',
+        padding: '1rem',
+        boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)',
+      }}
+      className='sidebar-wrapper me-4 d-flex flex-column justify-content-start align-items-start bg-success  '
     >
-      <h3>Common Articles</h3>
+      <h3
+        style={{ width: '100%', textAlign: 'center' }}
+        className='text-primary'
+      >
+        Helpful Links
+      </h3>
 
       <SidebarItem
         // style={{ border: '2px solid red' }}
-        appTitle='Clever'
-        article1='Login'
-        article_1_link=''
-        article2='Password Reset'
-        article_2_link=''
-        article3='Missing Apps'
-        article_3_link=''
-        article4='Sections & Enrollments'
-        article_4_link=''
+        sectionTitle='Getting Started'
+        //
+        link_1_title='What is Sage Overflow'
+        link_1=''
+        //
+        link_2_title='Frequently Asked Questions'
+        link_2=''
+        //
+        link_3_title=''
+        link_3=''
       />
 
       <SidebarItem
-        appTitle='Canvas'
-        article1='Editing Assignments'
-        article_1_link=''
-        article2='Using the Rich Content Editor'
-        article_2_link=''
-        article3='Logging in to the mobile app'
-        article_3_link=''
-        article4='Troubleshooting browser issues'
-        article_4_link=''
+        // style={{ border: '2px solid red' }}
+        sectionTitle='My Articles'
+        //
+        link_1_title='My Bookmarks'
+        link_1=''
+        //
+        link_2_title='Recently Viewed'
+        link_2=''
+        //
+        link_3_title='Recommended'
+        link_3=''
       />
 
       <SidebarItem
-        appTitle='Hapara'
-        article1='...'
-        article_1_link=''
-        article2='...'
-        article_2_link=''
-        article3='...'
-        article_3_link=''
-        article4='...'
-        article_4_link=''
-      />
-
-      <SidebarItem
-        appTitle='Bright Thinker'
-        article1='...'
-        article_1_link=''
-        article2='...'
-        article_2_link=''
-        article3='...'
-        article_3_link=''
-        article4='...'
-        article_4_link=''
+        // style={{ border: '2px solid red' }}
+        sectionTitle='Support'
+        //
+        link_1_title='Request an Article'
+        link_1=''
+        //
+        link_2_title='Submit a Ticket'
+        link_2=''
+        //
+        link_3_title='Report a Bug'
+        link_3=''
+        //
+        link_4_title='Feedback'
+        link_4=''
       />
     </div>
   );

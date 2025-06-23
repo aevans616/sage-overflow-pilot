@@ -1,7 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
+import arrowDown from '../assets/icons/arrowDown.png';
+import arrowRight from '../assets/icons/arrowRight.png';
 
 export default function SidebarItem(props) {
+  const [showLinks, setShowLinks] = useState(true);
   return (
     <div
       style={{
@@ -13,13 +16,78 @@ export default function SidebarItem(props) {
       }}
       className='app-section-wrapper'
     >
-      <h4 className='mt-4'>{props.appTitle}</h4>
-      <Nav.Link style={{ fontSize: '16px' }} href={props.article_1_link || '*'}>
-        {props.article1}
-      </Nav.Link>
-      <Nav.Link href={props.article_2_link || '*'}>{props.article2}</Nav.Link>
-      <Nav.Link href={props.article_3_link || '*'}>{props.article3}</Nav.Link>
-      <Nav.Link href={props.article_4_link || '*'}>{props.article4}</Nav.Link>
+      <div
+        className='title-icon Wrapper'
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          marginBottom: '0.5rem',
+          // borderBottom: '1px solid black',
+
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          setShowLinks(!showLinks);
+        }}
+      >
+        <h4
+          style={{
+            marginTop: '1.5rem',
+            fontWeight: '400',
+          }}
+        >
+          {props.sectionTitle}
+        </h4>
+        <img
+          src={showLinks ? arrowDown : arrowRight}
+          alt='arrow to open menu'
+          style={{ margin: '0 0 12px 10px', width: '16px', height: '18px' }}
+          className=''
+        />
+      </div>
+      {/*  */}
+      <div
+        className='links-wrapper'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'start',
+          alignItems: 'start',
+          gap: '0.25rem',
+          fontSize: '18px',
+          cursor: 'pointer',
+        }}
+      >
+        <Nav.Link
+          href={props.link_1 || '*'}
+          className={`${showLinks ? '' : 'd-none'}`}
+        >
+          {props.link_1_title}
+        </Nav.Link>
+        {/*  */}
+        <Nav.Link
+          href={props.link_2 || '*'}
+          className={`${showLinks ? '' : 'd-none'}`}
+        >
+          {props.link_2_title}
+        </Nav.Link>
+        {/*  */}
+        <Nav.Link
+          href={props.link_3 || '*'}
+          className={`${showLinks ? '' : 'd-none'}`}
+        >
+          {props.link_3_title}
+        </Nav.Link>
+        {/*  */}
+        <Nav.Link
+          href={props.link_4 || '*'}
+          className={`${showLinks ? '' : 'd-none'}`}
+        >
+          {props.link_4_title}
+        </Nav.Link>
+      </div>
     </div>
   );
 }
