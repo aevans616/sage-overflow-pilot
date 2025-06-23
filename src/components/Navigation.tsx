@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import sageLogo from '../assets/sage-logo.png';
 import '../../custom-theme.scss';
 
-const customLink = (name: string, styling?: string) => {
+const customLink = (name: string, className?: string) => {
   // create link URL
   let linkURL = name.toLowerCase();
   // remove all white spaces
@@ -17,8 +17,12 @@ const customLink = (name: string, styling?: string) => {
   }
 
   return (
-    <Nav.Link className={styling} href={`/${linkURL}`}>
-      {name}
+    <Nav.Link
+      href={`/${linkURL}`}
+      className={className}
+      style={{ fontSize: '14px', minWidth: 'fit-content' }}
+    >
+      {name.toUpperCase()}
     </Nav.Link>
   );
 };
@@ -36,7 +40,11 @@ export default function Navigation() {
           alt='sage oak logo'
           style={{ width: '6rem', marginRight: '6.8rem' }}
         />
-        <Navbar.Brand className='text-secondary fw-bold' href='/'>
+        <Navbar.Brand
+          href='/'
+          className='text-primary fw-bold'
+          style={{ fontSize: '24px' }}
+        >
           Sage Overflow
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -74,22 +82,21 @@ export default function Navigation() {
               }}
               className='links-right-wrapper'
             >
-              {/* //^ link to iiQ create a ticket */}
+              {/* //^ link to iiQ create-a-ticket */}
               {customLink('Create Ticket')}
               {customLink('Report Bug')}
 
               <NavDropdown
+                style={{ fontSize: '14px' }}
                 className='text-black'
-                title='Account'
+                title='ACCOUNT'
                 id='basic-nav-dropdown'
               >
-                <NavDropdown.Item href='#action/3.1'>Login</NavDropdown.Item>
+                <NavDropdown.Item href='/login'>Login</NavDropdown.Item>
                 <NavDropdown.Item href='#action/3.2'>Settings</NavDropdown.Item>
 
                 <NavDropdown.Divider />
-                <NavDropdown.Item href='#action/3.4'>
-                  Report a bug
-                </NavDropdown.Item>
+                <NavDropdown.Item href='/admin'>Admin</NavDropdown.Item>
               </NavDropdown>
             </div>
           </Nav>

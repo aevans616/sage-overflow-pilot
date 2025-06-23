@@ -9,13 +9,16 @@ import Categories from './pages/Categories.tsx';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Navigation from './components/Navigation.tsx';
 import Sidebar from './components/Sidebar.tsx';
+import Admin from './pages/Admin.tsx';
+import NotFound from './pages/NotFound.tsx';
+import ArticleForm from './pages/ArticleForm.tsx';
 
 import '../custom-theme.scss';
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Navigation />
-    <div className='side-bar-wrapper d-flex flex-row'>
+    <div className='side-bar-wrapper d-flex flex-row '>
       <Sidebar />
       <Routes>
         <Route path='/' element={<App />} />
@@ -24,6 +27,11 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/singlearticle' element={<SingleArticle />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/form' element={<ArticleForm />} />
+        {/* //^ 404 page must be the last link */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   </BrowserRouter>

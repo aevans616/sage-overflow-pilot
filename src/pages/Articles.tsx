@@ -9,6 +9,7 @@ const supabase = createClient(
 );
 
 export default function Articles() {
+  const [selectedSortValue, setSelectedSortValue] = useState('newest');
   const [article, setArticle] = useState([]);
   useEffect(() => {
     getArticle();
@@ -23,6 +24,7 @@ export default function Articles() {
   const sortArticles = (type: string) => {
     const sortedArticles = [...article];
     if (type === 'newest') {
+      setSelectedSortValue('newest');
       // sort articles by newest
       sortedArticles.sort(
         (a, b) =>
@@ -30,26 +32,31 @@ export default function Articles() {
       );
       // sort articles by olders
     } else if (type === 'oldest') {
+      setSelectedSortValue('oldest');
+
       sortedArticles.sort(
         (a, b) =>
           new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
       );
       // sort articles by most popular
     } else if (type === 'popular') {
+      setSelectedSortValue('popular');
+
       sortedArticles.sort((a, b) => b.view_count - a.view_count);
     }
     setArticle(sortedArticles);
   };
 
-  const sortCriteria = (criteria: string) => (
+  const sortCriteria = (criteria: string, highlight?: boolean) => (
     <a
       href=''
       style={{
         fontWeight: '400',
         color: '#000',
         cursor: 'pointer',
-        textDecoration: 'none',
         textTransform: 'capitalize',
+        textUnderlineOffset: '4px',
+        textDecoration: criteria === selectedSortValue ? 'underline' : 'none',
       }}
       onClick={(e) => {
         e.preventDefault();

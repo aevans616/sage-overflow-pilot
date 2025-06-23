@@ -24,7 +24,7 @@ export default function Sidebar() {
 
       <SidebarItem
         appTitle='Canvas'
-        article1='Editing Modules and Assignments'
+        article1='Editing Assignments'
         article_1_link=''
         article2='Using the Rich Content Editor'
         article_2_link=''

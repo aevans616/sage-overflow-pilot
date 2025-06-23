@@ -115,10 +115,10 @@ function App() {
           <CategoryCard cardTitle='Canvas' />
           <CategoryCard cardTitle='Google' />
           <CategoryCard cardTitle='Adobe' />
-          <CategoryCard cardTitle='Point of Contact' />
-          <CategoryCard cardTitle='Login' />
+          <CategoryCard cardTitle='Login Issues' />
           <CategoryCard cardTitle='Bright Thinker' />
           <CategoryCard cardTitle='Microsoft 365' />
+          <CategoryCard cardTitle='Points of Contact' />
         </div>
         {/* //& RECENT ARTICLES */}
         <h3 style={{ padding: ' 0 2rem', textAlign: 'left' }}>
