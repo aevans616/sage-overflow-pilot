@@ -13,6 +13,7 @@
 - [x] Add users table to backend
 - [x] Add tags table to backend
 - [] Build Admin Page
+- [] Work on Responsiveness
   CRUD ops
 - [] Create
 - [x] Read

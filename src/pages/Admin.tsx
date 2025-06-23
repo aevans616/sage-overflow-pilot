@@ -11,7 +11,7 @@ export default function Admin() {
       style={{
         width: '75%',
         height: 'fit-content',
-        // border: '2px solid red'
+        // border: '2px solid red',
       }}
       className='admin-page-wrapper'
     >
@@ -89,7 +89,7 @@ export default function Admin() {
             flexDirection: 'column',
             justifyContent: 'canter',
             alignItems: 'center',
-            width: '40%',
+            width: '30%',
             padding: '0 1rem',
           }}
         >

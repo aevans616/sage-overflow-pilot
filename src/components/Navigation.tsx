@@ -38,7 +38,7 @@ export default function Navigation() {
         <img
           src={sageLogo}
           alt='sage oak logo'
-          style={{ width: '6rem', marginRight: '6.8rem' }}
+          style={{ width: '6rem', marginRight: '2rem' }}
         />
         <Navbar.Brand
           href='/'
@@ -83,8 +83,8 @@ export default function Navigation() {
               className='links-right-wrapper'
             >
               {/* //^ link to iiQ create-a-ticket */}
-              {customLink('Create Ticket')}
-              {customLink('Report Bug')}
+              {/* {customLink('Create Ticket')}
+              {customLink('Report Bug')} */}
 
               <NavDropdown
                 style={{ fontSize: '14px' }}
