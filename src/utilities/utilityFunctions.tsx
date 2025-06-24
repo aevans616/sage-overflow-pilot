@@ -37,6 +37,7 @@ export const getLastArticleId = async (setState: any, backend: any) => {
 //
 //
 //
+//TODO error handling for if title or content is missing
 export const publishArticle = async (backend: any, contentData: any) => {
   const CD = contentData;
   try {
@@ -71,7 +72,7 @@ export const publishArticle = async (backend: any, contentData: any) => {
 //
 //
 //
-export async function getArticle(setter, backend) {
+export async function getArticle(setter?, backend) {
   const { data } = await backend.from('article').select();
   setter(data);
   //  console.log(data);
