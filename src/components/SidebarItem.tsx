@@ -43,7 +43,7 @@ export default function SidebarItem(props) {
         <img
           src={showLinks ? arrowDown : arrowRight}
           alt='arrow to open menu'
-          style={{ margin: '0 0 12px 10px', width: '16px', height: '18px' }}
+          style={{ margin: '0 0 14px 10px', width: '14px', height: '16px' }}
           className=''
         />
       </div>

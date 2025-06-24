@@ -50,7 +50,8 @@ export default function Admin() {
             borderRight: '2px solid #eee',
           }}
         >
-          <h3 style={{ marginBottom: '2rem' }}>My Published Articles</h3>
+          {/* //& PUBLISHED */}
+          <h3 style={{ marginBottom: '2rem' }}>Published Articles</h3>
           {/* TODO: show list of the users published article*/}
           <p style={{ color: 'red', textAlign: 'left' }}>
             currently set to only display articles written by author_id: 101.
@@ -79,13 +80,43 @@ export default function Admin() {
               </div>
             ) : null
           )}
-          <h3 style={{ margin: '3rem 0 2rem 0' }}>My Drafts</h3>
+          {/* //& DRAFTS */}
+          <h3 style={{ margin: '3rem 0 2rem 0' }}>Drafts</h3>
           <p style={{ color: 'red', textAlign: 'left' }}>
             currently set to only display drafts written by author_id: 101. Make
             dynamic once users are setup
           </p>
           {articles.map((entry: any) =>
             entry.is_published === false && entry.is_deleted === false ? (
+              <div
+                className='article-entry-wrapper'
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: '100%',
+                  margin: '0.25rem 0',
+                }}
+              >
+                <a
+                  href=''
+                  style={{
+                    fontSize: '18px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {entry.title}
+                </a>
+              </div>
+            ) : null
+          )}
+          {/* //& ARCHIVED */}
+          <h3 style={{ margin: '3rem 0 2rem 0' }}>Archived</h3>
+          <p style={{ color: 'red', textAlign: 'left' }}>
+            currently set to only display archived articles written by
+            author_id: 101. Make dynamic once users are setup
+          </p>
+          {articles.map((entry: any) =>
+            entry.is_published === false && entry.is_deleted === true ? (
               <div
                 className='article-entry-wrapper'
                 style={{
