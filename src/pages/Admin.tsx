@@ -10,21 +10,6 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-// Component for displaying articles on Admin page
-const userArticleEntry = () => {
-  <div
-    className='article-entry-wrapper'
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      width: '100%',
-      margin: '1rem 0',
-    }}
-  >
-    <h4></h4>
-  </div>;
-};
-
 export default function Admin() {
   const [articles, setArticles] = useState([]);
 
@@ -60,18 +45,47 @@ export default function Admin() {
             flexDirection: 'column',
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
-            borderRight: '2px solid #eee',
             width: '70%',
             padding: '0 1rem',
+            borderRight: '2px solid #eee',
           }}
         >
           <h3 style={{ marginBottom: '2rem' }}>My Published Articles</h3>
           {/* TODO: show list of the users published article*/}
-          <p>
-            currently set to only display articles written by author_id: 101
+          <p style={{ color: 'red', textAlign: 'left' }}>
+            currently set to only display articles written by author_id: 101.
+            Make dynamic once users are setup
           </p>
           {articles.map((entry: any) =>
-            entry.author_id === 101 ? (
+            entry.author_id === 101 && entry.is_published === true ? (
+              <div
+                className='article-entry-wrapper'
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: '100%',
+                  margin: '0.25rem 0',
+                }}
+              >
+                <a
+                  href=''
+                  style={{
+                    fontSize: '18px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {entry.title}
+                </a>
+              </div>
+            ) : null
+          )}
+          <h3 style={{ margin: '3rem 0 2rem 0' }}>My Drafts</h3>
+          <p style={{ color: 'red', textAlign: 'left' }}>
+            currently set to only display drafts written by author_id: 101. Make
+            dynamic once users are setup
+          </p>
+          {articles.map((entry: any) =>
+            entry.is_published === false && entry.is_deleted === false ? (
               <div
                 className='article-entry-wrapper'
                 style={{
@@ -134,21 +148,6 @@ export default function Admin() {
             </Dropdown.Menu>
           </Dropdown> */}
           {/*  */}
-          <Dropdown style={{ width: '100%' }}>
-            <Dropdown.Toggle
-              style={{ width: '100%' }}
-              variant='success'
-              id='dropdown-basic'
-            >
-              My Drafts
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item href='#/action-1'>draft 1 </Dropdown.Item>
-              <Dropdown.Item href='#/action-2'>draft 2</Dropdown.Item>
-              <Dropdown.Item href='#/action-3'>draft 3</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </div>
       </div>
     </div>
