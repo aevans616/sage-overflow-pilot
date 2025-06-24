@@ -15,7 +15,7 @@
 - [] Build Admin Page
 - [] Work on Responsiveness
   CRUD ops
-- [] Create
+- [x] Create
 - [x] Read
 - [] Update
 - [] Delete
