@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getArticle } from '../utilities/utilityFunctions';
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -17,14 +18,8 @@ export default function Articles() {
   const [selectedSortValue, setSelectedSortValue] = useState('newest');
   const [article, setArticle] = useState([]);
   useEffect(() => {
-    getArticle();
+    getArticle(setArticle, supabase);
   }, []);
-
-  async function getArticle() {
-    const { data } = await supabase.from('article').select();
-    setArticle(data);
-    // console.log(data);
-  }
 
   const sortArticles = (type: string) => {
     const sortedArticles = [...article];

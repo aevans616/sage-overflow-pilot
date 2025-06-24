@@ -67,3 +67,12 @@ export const publishArticle = async (backend: any, contentData: any) => {
     console.error('Error inserting item:', err.message);
   }
 };
+//
+//
+//
+//
+export async function getArticle(setter, backend) {
+  const { data } = await backend.from('article').select();
+  setter(data);
+  //  console.log(data);
+}

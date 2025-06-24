@@ -1,5 +1,3 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import CategoryCard from './components/CategoryCard';
@@ -9,6 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ArticleCardSmall from './components/ArticleCardSmall';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { getArticle } from './utilities/utilityFunctions';
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -18,14 +19,9 @@ const supabase = createClient(
 function App() {
   const [article, setArticle] = useState([]);
   useEffect(() => {
-    getArticle();
+    getArticle(setArticle, supabase);
   }, []);
 
-  async function getArticle() {
-    const { data } = await supabase.from('article').select();
-    setArticle(data);
-    //  console.log(data);
-  }
   return (
     <div style={{ width: '75%' }} className='home-wrapper'>
       {/* //* Searchbar */}
