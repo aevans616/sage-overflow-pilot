@@ -85,7 +85,7 @@ export default function ArticleForm({ placeholder }) {
           placeholder='Enter Title'
           onChange={(event) => {
             setArticleTitle(event.target.value);
-            console.log(articleTitle);
+            // console.log(articleTitle);
           }}
         />
 

@@ -38,19 +38,22 @@ export const getLastArticleId = async (setState: any, backend: any) => {
 //
 //
 export const publishArticle = async (backend: any, contentData: any) => {
+  const CD = contentData;
   try {
     const { data, error } = await backend
       .from('article')
       .insert([
         {
           // The object keys should match your table column names
-          id: contentData.id,
-          author_id: contentData.author_id,
-          created_at: contentData.created_at,
-          last_modified: contentData.last_modified,
-          view_count: contentData.view_count,
-          content: contentData.content,
-          is_published: contentData.is_published,
+          id: CD.id,
+          author_id: CD.author_id,
+          last_editor_id: CD.last_editor_id,
+          title: CD.title,
+          content: CD.content,
+          created_at: CD.created_at,
+          is_published: CD.is_published,
+          last_modified: CD.last_modified,
+          view_count: CD.view_count,
         },
       ])
       .select(); // .select() returns the inserted record(s)
