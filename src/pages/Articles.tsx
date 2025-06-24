@@ -7,7 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getArticle } from '../utilities/utilityFunctions';
+import {
+  getArticle,
+  truncateText,
+  formatTimestampToMonthDDYYYY,
+} from '../utilities/utilityFunctions';
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -136,7 +140,7 @@ export default function Articles() {
         </div>
 
         <div
-          className='article-wrapper w-100 p-4 d-flex flex-row flex-wrap gap-3 justify-content-center bg-success '
+          className='article-wrapper w-100 p-4 d-flex flex-column flex-wrap gap-4 justify-content-center bg-success '
           style={{ boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)' }}
         >
           {article.map((entry: any) => (
@@ -144,15 +148,17 @@ export default function Articles() {
               key={entry.id}
               imgURL={entry.image_url}
               cardTitle={entry.title}
-              cardContent={entry.content}
-              handleClick={(e) => {
-                e.preventDefault();
-                console.log(entry);
-                //& TODO: got article data from Supabase, now navigate to single article page with the appropriate data
+              cardContent={truncateText(entry.content)}
+              datePublished={formatTimestampToMonthDDYYYY(entry.created_at)}
+              views={entry.view_count}
+              // handleClick={(e) => {
+              //   e.preventDefault();
+              //   console.log(entry);
+              //   //& TODO: got article data from Supabase, now navigate to single article page with the appropriate data
 
-                // window.location.href = `/singlearticle`;
-                // window.location.href = `/singlearticle/${entry.id}`;
-              }}
+              //   // window.location.href = `/singlearticle`;
+              //   // window.location.href = `/singlearticle/${entry.id}`;
+              // }}
             />
           ))}
         </div>

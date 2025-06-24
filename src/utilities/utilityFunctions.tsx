@@ -77,3 +77,99 @@ export async function getArticle(setter?, backend) {
   setter(data);
   //  console.log(data);
 }
+//
+//
+//
+//
+// truncate article preview text if it has more than 290 characters
+export const truncateText = (text: string, maxLength: number = 200): string => {
+  // Check if the input text is valid and a string
+  if (typeof text !== 'string') {
+    console.warn(
+      'truncateText: Input is not a string. Returning original input.'
+    );
+    return text;
+  }
+
+  // Check if the text length exceeds the maximum allowed length
+  if (text.length > maxLength) {
+    // If it does, truncate the string and append an ellipsis
+    return text.substring(0, maxLength) + '...';
+  } else {
+    // If it doesn't, return the original string
+    return text;
+  }
+};
+//
+//
+//
+//
+
+export const formatTimestampToMonthDDYYYY = (
+  timestamp: Date | number | string
+): string => {
+  try {
+    // Create a Date object from the input timestamp
+    const date = new Date(timestamp);
+
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      console.error('Invalid timestamp provided:', timestamp);
+      return ''; // Return an empty string for invalid dates
+    }
+
+    // Get month (0-indexed), day, and year components
+    const monthIndex = date.getMonth();
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear().toString(); // Get last two digits of the year
+
+    let monthAbbreviation: string;
+
+    // Using a switch statement to assign three-letter month abbreviation
+    switch (monthIndex) {
+      case 0:
+        monthAbbreviation = 'JAN';
+        break;
+      case 1:
+        monthAbbreviation = 'FEB';
+        break;
+      case 2:
+        monthAbbreviation = 'MAR';
+        break;
+      case 3:
+        monthAbbreviation = 'APR';
+        break;
+      case 4:
+        monthAbbreviation = 'MAY';
+        break;
+      case 5:
+        monthAbbreviation = 'JUN';
+        break;
+      case 6:
+        monthAbbreviation = 'JUL';
+        break;
+      case 7:
+        monthAbbreviation = 'AUG';
+        break;
+      case 8:
+        monthAbbreviation = 'SEP';
+        break;
+      case 9:
+        monthAbbreviation = 'OCT';
+        break;
+      case 10:
+        monthAbbreviation = 'NOV';
+        break;
+      case 11:
+        monthAbbreviation = 'DEC';
+        break;
+      default:
+        monthAbbreviation = 'UNK'; // Unknown month
+    }
+
+    return `${monthAbbreviation} ${day} ${year}`;
+  } catch (error) {
+    console.error('Error formatting timestamp:', error);
+    return ''; // Return an empty string in case of an unexpected error
+  }
+};
