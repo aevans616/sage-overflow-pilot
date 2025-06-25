@@ -86,6 +86,13 @@ export async function getArticles(setter?, backend, filter?) {
 }
 //
 //
+export async function getArticlesByID(setter, backend, rowId) {
+  const { data } = await backend.from('article').select('*').eq('id', rowId);
+  setter(data[0]);
+  // console.log(data);
+}
+//
+//
 //
 //
 // truncate article preview text if it has more than 290 characters

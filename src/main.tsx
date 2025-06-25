@@ -24,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/' element={<App />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/articles' element={<Articles />} />
-        <Route path='/singlearticle' element={<SingleArticle />} />
+        <Route path='/singlearticle/:id' element={<SingleArticle />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/admin' element={<Admin />} />

@@ -2,11 +2,9 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router';
 import eye from '../assets/eye.png';
 
-//TODO truncate title text after X amount of characters
-
 export default function ArticleCard(props) {
   return (
-    <Link to='' style={{ textDecoration: 'none' }}>
+    <Link to='' style={{ textDecoration: 'none' }} onClick={props.handleClick}>
       <Card
         style={{
           width: '100%',
@@ -92,9 +90,6 @@ export default function ArticleCard(props) {
           >
             {props.cardContent}
           </Card.Text>
-          {/* <Button variant='outline-primary' onClick={props.handleClick}>
-          Read Article
-        </Button> */}
         </Card.Body>
       </Card>
     </Link>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import ArticleCard from '../components/ArticleCard';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +17,7 @@ import {
 export default function Articles() {
   const [selectedSortValue, setSelectedSortValue] = useState('newest');
   const [article, setArticle] = useState([]);
+  const navigate = useNavigate();
 
   const sortArticles = (type: string) => {
     const sortedArticles = [...article];
@@ -147,14 +149,11 @@ export default function Articles() {
               cardContent={truncateText(entry.content)}
               datePublished={formatTimestampToMonthDDYYYY(entry.created_at)}
               views={entry.view_count}
-              // handleClick={(e) => {
-              //   e.preventDefault();
-              //   console.log(entry);
-              //   //& TODO: got article data from Supabase, now navigate to single article page with the appropriate data
-
-              //   // window.location.href = `/singlearticle`;
-              //   // window.location.href = `/singlearticle/${entry.id}`;
-              // }}
+              handleClick={(e: any) => {
+                e.preventDefault();
+                navigate(`/singlearticle/${entry.id}`);
+                // console.log(entry);
+              }}
             />
           ))}
         </div>
