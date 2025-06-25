@@ -1,3 +1,10 @@
+import { createClient } from '@supabase/supabase-js';
+
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
 export const getLastArticleId = async (setState: any, backend: any) => {
   try {
     // 1. Query the 'article' table
@@ -37,7 +44,9 @@ export const getLastArticleId = async (setState: any, backend: any) => {
 //
 //
 //
-//TODO error handling for if title or content is missing
+//TODO error handling for if title or content is missing or black
+//TODO error handling for if title or content is missing or black
+//TODO error handling for if title or content is missing or black
 export const publishArticle = async (backend: any, contentData: any) => {
   const CD = contentData;
   try {
@@ -167,7 +176,7 @@ export const formatTimestampToMonthDDYYYY = (
         monthAbbreviation = 'UNK'; // Unknown month
     }
 
-    return `${monthAbbreviation} ${day} ${year}`;
+    return `${monthAbbreviation} ${day}, ${year}`;
   } catch (error) {
     console.error('Error formatting timestamp:', error);
     return ''; // Return an empty string in case of an unexpected error

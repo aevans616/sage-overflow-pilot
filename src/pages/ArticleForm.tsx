@@ -5,12 +5,8 @@ import JoditEditor from 'jodit-react';
 import {
   getLastArticleId,
   publishArticle,
+  supabase,
 } from '../utilities/utilityFunctions';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
 
 //TODO: Update default editor alignment
 console.clear();

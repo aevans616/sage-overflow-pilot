@@ -10,13 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   getArticle,
   truncateText,
+  supabase,
   formatTimestampToMonthDDYYYY,
 } from '../utilities/utilityFunctions';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
 
 export default function Articles() {
   const [selectedSortValue, setSelectedSortValue] = useState('newest');

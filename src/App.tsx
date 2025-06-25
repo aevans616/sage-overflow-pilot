@@ -9,12 +9,7 @@ import Col from 'react-bootstrap/Col';
 import ArticleCardSmall from './components/ArticleCardSmall';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getArticle } from './utilities/utilityFunctions';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { getArticle, supabase } from './utilities/utilityFunctions';
 
 function App() {
   const [article, setArticle] = useState([]);

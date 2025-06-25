@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { getArticle } from '../utilities/utilityFunctions';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import Dropdown from 'react-bootstrap/Dropdown';
+import { getArticle, supabase } from '../utilities/utilityFunctions';
 
 export default function Admin() {
   const [articles, setArticles] = useState([]);
@@ -60,6 +56,7 @@ export default function Admin() {
           {articles.map((entry: any) =>
             entry.author_id === 101 && entry.is_published === true ? (
               <div
+                key={entry.id}
                 className='article-entry-wrapper'
                 style={{
                   display: 'flex',
@@ -89,6 +86,7 @@ export default function Admin() {
           {articles.map((entry: any) =>
             entry.is_published === false && entry.is_deleted === false ? (
               <div
+                key={entry.id}
                 className='article-entry-wrapper'
                 style={{
                   display: 'flex',
@@ -118,6 +116,7 @@ export default function Admin() {
           {articles.map((entry: any) =>
             entry.is_published === false && entry.is_deleted === true ? (
               <div
+                key={entry.id}
                 className='article-entry-wrapper'
                 style={{
                   display: 'flex',
