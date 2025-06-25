@@ -44,9 +44,7 @@ export const getLastArticleId = async (setState: any, backend: any) => {
 //
 //
 //
-//TODO error handling for if title or content is missing or black
-//TODO error handling for if title or content is missing or black
-//TODO error handling for if title or content is missing or black
+
 export const publishArticle = async (backend: any, contentData: any) => {
   const CD = contentData;
   try {

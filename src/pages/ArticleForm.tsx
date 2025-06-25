@@ -11,10 +11,18 @@ import {
 //TODO: Update default editor alignment
 console.clear();
 
+// Before pushing new data to the article table check if title and content are not undefined, null or empty string
+const isContentNull = (title: string, body: string): boolean => {
+  if (!title || !body) {
+    return false;
+  }
+  return true;
+};
+
 export default function ArticleForm({ placeholder }) {
   const editor = useRef(null);
-  const [articleTitle, setArticleTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [articleTitle, setArticleTitle] = useState(''); // stores new article title
+  const [content, setContent] = useState(''); // stores new article data
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
 
   //* Variables for article table
@@ -137,8 +145,15 @@ export default function ArticleForm({ placeholder }) {
             }}
             onClick={() => {
               // push article data to supabase
-              publishArticle(supabase, newArticle);
-              console.log(content);
+              if (isContentNull(articleTitle, content)) {
+                publishArticle(supabase, newArticle);
+              } else {
+                throw new Error(
+                  'Cannot post a new article without a title or body content'
+                );
+              }
+              console.log('title ' + articleTitle);
+              console.log('content ' + content);
             }}
           >
             Publish

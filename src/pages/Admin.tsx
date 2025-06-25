@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
-
 import Dropdown from 'react-bootstrap/Dropdown';
 import { getArticle, supabase } from '../utilities/utilityFunctions';
 
