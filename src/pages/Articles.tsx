@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import ArticleCard from '../components/ArticleCard';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  getArticle,
+  getArticles,
   truncateText,
   supabase,
   formatTimestampToMonthDDYYYY,
@@ -17,9 +16,6 @@ import {
 export default function Articles() {
   const [selectedSortValue, setSelectedSortValue] = useState('newest');
   const [article, setArticle] = useState([]);
-  useEffect(() => {
-    getArticle(setArticle, supabase);
-  }, []);
 
   const sortArticles = (type: string) => {
     const sortedArticles = [...article];
@@ -66,6 +62,10 @@ export default function Articles() {
       {criteria}
     </a>
   );
+
+  useEffect(() => {
+    getArticles(setArticle, supabase);
+  }, []);
 
   return (
     <>

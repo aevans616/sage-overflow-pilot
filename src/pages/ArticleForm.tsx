@@ -1,5 +1,4 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { Button, Form } from 'react-bootstrap';
 import JoditEditor from 'jodit-react';
 import {
@@ -57,7 +56,8 @@ export default function ArticleForm({ placeholder }) {
   const config = useMemo(
     () => ({
       readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-      placeholder: placeholder || 'Start typing...',
+      placeholder: placeholder || 'Enter text...',
+      direction: 'ltr', // also inherits text align from parent
     }),
     [placeholder]
   );
@@ -78,6 +78,7 @@ export default function ArticleForm({ placeholder }) {
           alignItems: 'center',
           gap: '0.25rem',
           width: '100%',
+          textAlign: 'left',
         }}
       >
         <Form.Label style={{ width: '100%', textAlign: 'left' }}>

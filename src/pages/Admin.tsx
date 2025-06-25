@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { getArticle, supabase } from '../utilities/utilityFunctions';
+import { getArticles, supabase } from '../utilities/utilityFunctions';
 
 export default function Admin() {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    getArticle(setArticles, supabase);
+    getArticles(setArticles, supabase);
   }, []);
 
   console.log(articles);

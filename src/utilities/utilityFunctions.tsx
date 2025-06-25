@@ -79,8 +79,8 @@ export const publishArticle = async (backend: any, contentData: any) => {
 //
 //
 //
-export async function getArticle(setter?, backend) {
-  const { data } = await backend.from('article').select();
+export async function getArticles(setter?, backend, filter?) {
+  const { data } = await backend.from('article').select(filter);
   setter(data);
   //  console.log(data);
 }

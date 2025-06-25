@@ -9,12 +9,12 @@ import Col from 'react-bootstrap/Col';
 import ArticleCardSmall from './components/ArticleCardSmall';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getArticle, supabase } from './utilities/utilityFunctions';
+import { getArticles, supabase } from './utilities/utilityFunctions';
 
 function App() {
   const [article, setArticle] = useState([]);
   useEffect(() => {
-    getArticle(setArticle, supabase);
+    getArticles(setArticle, supabase);
   }, []);
 
   return (
