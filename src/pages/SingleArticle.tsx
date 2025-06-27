@@ -8,7 +8,7 @@ export default function SingleArticle(props) {
 
   const { id } = useParams(); // article id derived from the current url: eg singlearticle/16
 
-  console.log(article);
+  // console.log(article);
   // console.log('id: ', id, typeof id);
   // console.log(article[0].id);
 
@@ -20,7 +20,7 @@ export default function SingleArticle(props) {
 
   const htmlFromBackend = article.content;
   const plainText = convertHtmlToPlainText(htmlFromBackend);
-  console.log(plainText); // Output: Hello World!This is some HTML content.
+  // console.log(plainText);
 
   useEffect(() => {
     getArticlesByID(setArticle, supabase, id);

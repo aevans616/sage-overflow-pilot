@@ -82,11 +82,12 @@ export const publishArticle = async (backend: any, contentData: any) => {
 export async function getArticles(setter?, backend, filter?) {
   const { data } = await backend.from('article').select(filter);
   setter(data);
+  return data;
   //  console.log(data);
 }
 //
 //
-export async function getArticlesByID(setter, backend, rowId) {
+export async function getArticlesByID(setter?, backend?, rowId) {
   const { data } = await backend.from('article').select('*').eq('id', rowId);
   setter(data[0]);
   // console.log(data);
@@ -187,3 +188,28 @@ export const formatTimestampToMonthDDYYYY = (
     return ''; // Return an empty string in case of an unexpected error
   }
 };
+//
+//
+//
+//
+export async function incrementViewCount(viewCount: number, id: number) {
+  try {
+    // console.log(typeof viewCount);
+    // console.log(typeof id);
+
+    const newViewCount = viewCount + 1;
+
+    const { error } = await supabase
+      .from('article')
+      .update({ view_count: newViewCount })
+      .eq('id', id);
+
+    if (error) {
+      throw new Error(
+        `Failed to increment view count for the article with id: ${id}`
+      );
+    }
+  } catch (err) {
+    console.log('Unexpected error incrementing view count', err);
+  }
+}

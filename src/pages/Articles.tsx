@@ -12,6 +12,7 @@ import {
   truncateText,
   supabase,
   formatTimestampToMonthDDYYYY,
+  incrementViewCount,
 } from '../utilities/utilityFunctions';
 
 export default function Articles() {
@@ -151,6 +152,7 @@ export default function Articles() {
               views={entry.view_count}
               handleClick={(e: any) => {
                 e.preventDefault();
+                incrementViewCount(entry.view_count, entry.id);
                 navigate(`/singlearticle/${entry.id}`);
                 // console.log(entry);
               }}

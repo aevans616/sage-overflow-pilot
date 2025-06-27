@@ -2,7 +2,8 @@
 
 - [x] Setup Supabase
       Note Enable Row Level Security (RLS) is enabled
-- [] Populate Articles Complete in Supabase
+- [] Populate Complete in Supabase
+- [] Replace Editor with Novel package
 - [x] Install Router
 - [] Complete setup of routes
 - [x] Build Home Page
