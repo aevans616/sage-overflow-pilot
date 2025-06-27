@@ -1,11 +1,35 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { getArticles, supabase } from '../utilities/utilityFunctions';
+import {
+  getArticles,
+  supabase,
+  incrementViewCount,
+} from '../utilities/utilityFunctions';
 
 export default function Admin() {
   const [articles, setArticles] = useState([]);
+
+  const linkToArticle = (props) => {
+    <Link
+      to={`/singlearticle/${props.entry.id}`}
+      key={props.entry.id}
+      className='article-entry-wrapper'
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        margin: '0.25rem 0',
+        fontSize: '18px',
+        textDecoration: 'none',
+      }}
+      onClick={() => {
+        incrementViewCount(props.entry.view_count, props.entry.id);
+      }}
+    >
+      {props.entry.title}
+    </Link>;
+  };
 
   useEffect(() => {
     getArticles(setArticles, supabase);
@@ -52,8 +76,9 @@ export default function Admin() {
             Make dynamic once users are setup
           </p>
           {articles.map((entry: any) =>
-            entry.author_id === 101 && entry.is_published === true ? (
-              <div
+            entry.is_published === true ? (
+              <Link
+                to={`/singlearticle/${entry.id}`}
                 key={entry.id}
                 className='article-entry-wrapper'
                 style={{
@@ -61,18 +86,15 @@ export default function Admin() {
                   flexDirection: 'row',
                   width: '100%',
                   margin: '0.25rem 0',
+                  fontSize: '18px',
+                  textDecoration: 'none',
+                }}
+                onClick={() => {
+                  incrementViewCount(entry.view_count, entry.id);
                 }}
               >
-                <a
-                  href=''
-                  style={{
-                    fontSize: '18px',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {entry.title}
-                </a>
-              </div>
+                {entry.title}
+              </Link>
             ) : null
           )}
           {/* //& DRAFTS */}
@@ -83,7 +105,8 @@ export default function Admin() {
           </p>
           {articles.map((entry: any) =>
             entry.is_published === false && entry.is_deleted === false ? (
-              <div
+              <Link
+                to={`/singlearticle/${entry.id}`}
                 key={entry.id}
                 className='article-entry-wrapper'
                 style={{
@@ -91,18 +114,15 @@ export default function Admin() {
                   flexDirection: 'row',
                   width: '100%',
                   margin: '0.25rem 0',
+                  fontSize: '18px',
+                  textDecoration: 'none',
+                }}
+                onClick={() => {
+                  incrementViewCount(entry.view_count, entry.id);
                 }}
               >
-                <a
-                  href=''
-                  style={{
-                    fontSize: '18px',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {entry.title}
-                </a>
-              </div>
+                {entry.title}
+              </Link>
             ) : null
           )}
           {/* //& ARCHIVED */}
@@ -113,7 +133,8 @@ export default function Admin() {
           </p>
           {articles.map((entry: any) =>
             entry.is_published === false && entry.is_deleted === true ? (
-              <div
+              <Link
+                to={`/singlearticle/${entry.id}`}
                 key={entry.id}
                 className='article-entry-wrapper'
                 style={{
@@ -121,18 +142,15 @@ export default function Admin() {
                   flexDirection: 'row',
                   width: '100%',
                   margin: '0.25rem 0',
+                  fontSize: '18px',
+                  textDecoration: 'none',
+                }}
+                onClick={() => {
+                  incrementViewCount(entry.view_count, entry.id);
                 }}
               >
-                <a
-                  href=''
-                  style={{
-                    fontSize: '18px',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {entry.title}
-                </a>
-              </div>
+                {entry.title}
+              </Link>
             ) : null
           )}
         </div>
@@ -160,21 +178,7 @@ export default function Admin() {
               Publish New Article
             </Button>
           </Link>
-          {/* <Dropdown style={{ width: '100%' }}>
-            <Dropdown.Toggle
-              style={{ width: '100%' }}
-              variant='success'
-              id='dropdown-basic'
-            >
-              My Articles
-            </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item href='#/action-1'>name</Dropdown.Item>
-              <Dropdown.Item href='#/action-2'>name</Dropdown.Item>
-              <Dropdown.Item href='#/action-3'>name</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown> */}
           {/*  */}
         </div>
       </div>
