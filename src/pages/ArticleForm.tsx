@@ -10,6 +10,7 @@ import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
 import Attaches from '@editorjs/attaches';
 import SimpleImage from '@editorjs/simple-image';
+import Warning from '@editorjs/warning';
 
 import {
   getLastArticleId,
@@ -17,8 +18,9 @@ import {
   supabase,
 } from '../utilities/utilityFunctions';
 
-//TODO: Update default editor alignment
 console.clear();
+
+// TODO: add save functionality: https://editorjs.io/saving-data/
 
 // Before pushing new data to the article table check if title and content are not undefined, null or empty string
 const isContentNull = (title: string, body: string): boolean => {
@@ -32,6 +34,8 @@ export default function ArticleForm({ placeholder }) {
   const [articleTitle, setArticleTitle] = useState(''); // stores new article title
   const [content, setContent] = useState(''); // stores new article data
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
+
+  console.log(articleTitle);
 
   //* Variables for article table
   interface ArticleData {
@@ -72,6 +76,15 @@ export default function ArticleForm({ placeholder }) {
        */
       holder: 'editor',
       placeholder: 'Write something',
+
+      /**
+       * Specifies the order of the tools that appear when text is highlighted
+       * - if true (or not specified), the order from 'tool' property will be used (default)
+       * - if an array of tool names, this order will be used
+       */
+      inlineToolbar: ['bold', 'italic', 'link', 'marker'],
+      // inlineToolbar: true,
+
       /**
        * Available Tools list.
        * Pass Tool's class or Settings object for each Tool you want to use
@@ -82,10 +95,14 @@ export default function ArticleForm({ placeholder }) {
 
       //? TODO:  adding a link has poor color contrast
 
+      //? List of all tools available:
+      // https://github.com/editor-js/awesome-editorjs?tab=readme-ov-file
       tools: {
         header: Header,
         list: List,
         quote: Quote,
+        warning: Warning,
+
         marker: Marker,
         attaches: Attaches,
         image: SimpleImage,
@@ -182,6 +199,7 @@ export default function ArticleForm({ placeholder }) {
             onClick={() => {
               // Post article data to supabase
               if (isContentNull(articleTitle, content)) {
+                // saveEditorData();
                 publishArticle(supabase, newArticle);
               } else {
                 throw new Error(

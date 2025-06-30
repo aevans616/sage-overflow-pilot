@@ -19,6 +19,8 @@
     "@editorjs/marker": "^1.4.0",
     "@editorjs/quote": "^2.7.6",
     "@editorjs/simple-image": "^1.6.0",
+    "@editorjs/table": "^2.4.5",
+    "@editorjs/warning": "^1.4.1",
     "@supabase/supabase-js": "^2.49.10",
     "bootstrap": "^5.3.6",
     "jodit-react": "^5.2.19",
