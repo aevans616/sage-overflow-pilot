@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { Button, Form } from 'react-bootstrap';
 // import JoditEditor from 'jodit-react';
 import EditorJS from '@editorjs/editorjs';
@@ -20,6 +20,20 @@ import {
 
 console.clear();
 
+//? TODO: Populate Initial Data with content from the backend (For editing content)
+const INITIAL_DATA = {
+  time: new Date().getTime(),
+  blocks: [
+    {
+      type: 'header',
+      data: {
+        text: 'This is a tutorial of Editor js',
+        level: 1,
+      },
+    },
+  ],
+};
+
 // TODO: add save functionality: https://editorjs.io/saving-data/
 
 // Before pushing new data to the article table check if title and content are not undefined, null or empty string
@@ -30,12 +44,59 @@ const isContentNull = (title: string, body: string): boolean => {
   return true;
 };
 
+//* EDITOR COMPONENT
+const Editor = ({ data, onChange, editorBlock }) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    const EDITOR_JS_TOOLS = {
+      header: Header,
+      list: List,
+      quote: Quote,
+      warning: Warning,
+      marker: Marker,
+      attaches: Attaches,
+      image: SimpleImage,
+      embed: Embed,
+      // embed only supports the following services: https://github.com/editor-js/embed
+    };
+
+    //
+    //
+    //
+    //
+
+    if (!ref.current) {
+      const editor = new EditorJS({
+        holder: editorBlock,
+        placeholder: 'Begin writing...',
+        data: data,
+        tools: EDITOR_JS_TOOLS,
+        async onChange(api, event) {
+          const data = await api.saver.save();
+          onChange(data);
+        },
+      });
+      ref.current = editor;
+    }
+
+    return () => {
+      if (ref.current && ref.current.destroy) {
+        ref.current.destroy();
+      }
+    };
+  }, []);
+
+  return <div id={editorBlock} />;
+};
+
 export default function ArticleForm({ placeholder }) {
   const [articleTitle, setArticleTitle] = useState(''); // stores new article title
-  const [content, setContent] = useState(''); // stores new article data
+  const [content, setContent] = useState(INITIAL_DATA); // stores new article data
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
 
   console.log(articleTitle);
+  console.log(content);
 
   //* Variables for article table
   interface ArticleData {
@@ -70,50 +131,50 @@ export default function ArticleForm({ placeholder }) {
     getLastArticleId(setLastId, supabase);
 
     // create editor
-    const editor = new EditorJS({
-      /**
-       * Id of Element that should contain Editor instance
-       */
-      holder: 'editor',
-      placeholder: 'Write something',
+    //   const editor = new EditorJS({
+    //     /**
+    //      * Id of Element that should contain Editor instance
+    //      */
+    //     holder: 'editor',
+    //     placeholder: 'Write something',
 
-      /**
-       * Specifies the order of the tools that appear when text is highlighted
-       * - if true (or not specified), the order from 'tool' property will be used (default)
-       * - if an array of tool names, this order will be used
-       */
-      inlineToolbar: ['bold', 'italic', 'link', 'marker'],
-      // inlineToolbar: true,
+    //     /**
+    //      * Specifies the order of the tools that appear when text is highlighted
+    //      * - if true (or not specified), the order from 'tool' property will be used (default)
+    //      * - if an array of tool names, this order will be used
+    //      */
+    //     inlineToolbar: ['bold', 'italic', 'link', 'marker'],
+    //     // inlineToolbar: true,
 
-      /**
-       * Available Tools list.
-       * Pass Tool's class or Settings object for each Tool you want to use
-       */
-      //TODO add images,
+    //     /**
+    //      * Available Tools list.
+    //      * Pass Tool's class or Settings object for each Tool you want to use
+    //      */
+    //     //TODO add images,
 
-      //& TODO: Text links should open in a new page on click, currently user must command + click
+    //     //& TODO: Text links should open in a new page on click, currently user must command + click
 
-      //? TODO:  adding a link has poor color contrast
+    //     //? TODO:  adding a link has poor color contrast
 
-      //? List of all tools available:
-      // https://github.com/editor-js/awesome-editorjs?tab=readme-ov-file
-      tools: {
-        header: Header,
-        list: List,
-        quote: Quote,
-        warning: Warning,
+    //     //? List of all tools available:
+    //     // https://github.com/editor-js/awesome-editorjs?tab=readme-ov-file
+    //     tools: {
+    //       header: Header,
+    //       list: List,
+    //       quote: Quote,
+    //       warning: Warning,
 
-        marker: Marker,
-        attaches: Attaches,
-        image: SimpleImage,
-        // embed only supports the following services: https://github.com/editor-js/embed
-        embed: Embed,
-      },
-      /**
-    //!Previously saved data that should be rendered
-   */
-      // data: {},
-    });
+    //       marker: Marker,
+    //       attaches: Attaches,
+    //       image: SimpleImage,
+    //       // embed only supports the following services: https://github.com/editor-js/embed
+    //       embed: Embed,
+    //     },
+    //     /**
+    //   //!Previously saved data that should be rendered
+    //  */
+    //     // data: {},
+    //   });
   }, []); // Empty dependency array, run only once
 
   return (
@@ -154,7 +215,7 @@ export default function ArticleForm({ placeholder }) {
           Article Content
         </Form.Label>
         {/* //! EDITOR */}
-        <div
+        {/* <div
           id='editor'
           style={{
             maxHeight: '85vh',
@@ -163,7 +224,12 @@ export default function ArticleForm({ placeholder }) {
             scrollbarWidth: 'thin',
             outline: '2px solid #f2f2f5',
           }}
-        ></div>
+        ></div> */}
+        <Editor
+          data={content}
+          onChange={setContent}
+          editorBlock='editorjs-container'
+        />
         <div
           className='buttons-wrapper'
           style={{
