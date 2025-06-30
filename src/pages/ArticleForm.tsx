@@ -1,6 +1,16 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import JoditEditor from 'jodit-react';
+// import JoditEditor from 'jodit-react';
+import EditorJS from '@editorjs/editorjs';
+//* each editor tool must be installed one at a time: npm i @editorjs/header
+import Header from '@editorjs/header';
+import List from '@editorjs/list';
+import Embed from '@editorjs/embed';
+import Marker from '@editorjs/marker';
+import Quote from '@editorjs/quote';
+import Attaches from '@editorjs/attaches';
+import SimpleImage from '@editorjs/simple-image';
+
 import {
   getLastArticleId,
   publishArticle,
@@ -19,7 +29,6 @@ const isContentNull = (title: string, body: string): boolean => {
 };
 
 export default function ArticleForm({ placeholder }) {
-  const editor = useRef(null);
   const [articleTitle, setArticleTitle] = useState(''); // stores new article title
   const [content, setContent] = useState(''); // stores new article data
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
@@ -53,21 +62,51 @@ export default function ArticleForm({ placeholder }) {
 
   // console.log('next article_id will be: ' + newArticle.id);
 
-  const config = useMemo(
-    () => ({
-      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-      placeholder: placeholder || 'Enter text...',
-      direction: 'ltr', // also inherits text align from parent
-    }),
-    [placeholder]
-  );
-
   useEffect(() => {
     getLastArticleId(setLastId, supabase);
+
+    // create editor
+    const editor = new EditorJS({
+      /**
+       * Id of Element that should contain Editor instance
+       */
+      holder: 'editor',
+      placeholder: 'Write something',
+      /**
+       * Available Tools list.
+       * Pass Tool's class or Settings object for each Tool you want to use
+       */
+      //TODO add images,
+
+      //& TODO: Text links should open in a new page on click, currently user must command + click
+
+      //? TODO:  adding a link has poor color contrast
+
+      tools: {
+        header: Header,
+        list: List,
+        quote: Quote,
+        marker: Marker,
+        attaches: Attaches,
+        image: SimpleImage,
+        // embed only supports the following services: https://github.com/editor-js/embed
+        embed: Embed,
+      },
+      /**
+    //!Previously saved data that should be rendered
+   */
+      // data: {},
+    });
   }, []); // Empty dependency array, run only once
 
   return (
-    <Form>
+    <Form
+      style={{
+        width: '100%',
+        padding: '1rem',
+        outline: '2px solid #f2f2f5',
+      }}
+    >
       <Form.Group
         className='mb-3'
         controlId='formBasicEmail'
@@ -75,7 +114,7 @@ export default function ArticleForm({ placeholder }) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          alignItems: 'center',
+          // alignItems: 'center',
           gap: '0.25rem',
           width: '100%',
           textAlign: 'left',
@@ -84,7 +123,6 @@ export default function ArticleForm({ placeholder }) {
         <Form.Label style={{ width: '100%', textAlign: 'left' }}>
           Article Title
         </Form.Label>
-        {/* //TODO get title data, place into state, include in ArticleData interface */}
         <Form.Control
           type='text'
           placeholder='Enter Title'
@@ -93,25 +131,22 @@ export default function ArticleForm({ placeholder }) {
             // console.log(articleTitle);
           }}
         />
-
         <Form.Label
           style={{ width: '100%', marginTop: '2rem', textAlign: 'left' }}
         >
           Article Content
         </Form.Label>
-        <JoditEditor
-          className='w-100'
-          ref={editor}
-          value={content}
-          //^ value will be set to data from backend or "content" for new text
-          config={config}
-          tabIndex={1} // tabIndex of the editor
-          onBlur={(newContent) => setContent(newContent)} // Update content on blur for performance reasons
-          onChange={(newContent) => {
-            setContent(newContent);
-            // console.log(newContent);
+        {/* //! EDITOR */}
+        <div
+          id='editor'
+          style={{
+            maxHeight: '85vh',
+            overflow: 'scroll',
+            scrollbarColor: '#000 #eee',
+            scrollbarWidth: 'thin',
+            outline: '2px solid #f2f2f5',
           }}
-        />
+        ></div>
         <div
           className='buttons-wrapper'
           style={{
@@ -145,7 +180,7 @@ export default function ArticleForm({ placeholder }) {
               width: '8rem',
             }}
             onClick={() => {
-              // push article data to supabase
+              // Post article data to supabase
               if (isContentNull(articleTitle, content)) {
                 publishArticle(supabase, newArticle);
               } else {
