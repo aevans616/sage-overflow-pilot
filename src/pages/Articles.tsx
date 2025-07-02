@@ -150,7 +150,7 @@ export default function Articles() {
               cardContent={truncateText(entry.content)}
               datePublished={formatTimestampToMonthDDYYYY(entry.created_at)}
               views={entry.view_count}
-              handleClick={(e: any) => {
+              handleClick={(e) => {
                 e.preventDefault();
                 incrementViewCount(entry.view_count, entry.id);
                 navigate(`/singlearticle/${entry.id}`);

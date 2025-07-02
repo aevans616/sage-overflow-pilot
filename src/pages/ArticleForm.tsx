@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useLocation } from 'react-router';
 // import JoditEditor from 'jodit-react';
 import EditorJS from '@editorjs/editorjs';
 //* each editor tool must be installed one at a time: npm i @editorjs/header
@@ -14,27 +15,13 @@ import Warning from '@editorjs/warning';
 
 import {
   getLastArticleId,
+  getArticlesByID,
   publishArticle,
   supabase,
+  parseJsonData,
 } from '../utilities/utilityFunctions';
 
 console.clear();
-
-//? TODO: Populate Initial Data with content from the backend (For editing content)
-const INITIAL_DATA = {
-  time: new Date().getTime(),
-  blocks: [
-    {
-      type: 'header',
-      data: {
-        text: 'This is a tutorial of Editor js',
-        level: 1,
-      },
-    },
-  ],
-};
-
-// TODO: add save functionality: https://editorjs.io/saving-data/
 
 // Before pushing new data to the article table check if title and content are not undefined, null or empty string
 const isContentNull = (title: string, body: string): boolean => {
@@ -45,6 +32,9 @@ const isContentNull = (title: string, body: string): boolean => {
 };
 
 //* EDITOR COMPONENT
+//* EDITOR COMPONENT
+
+// TODO export to its own file
 const Editor = ({ data, onChange, editorBlock }) => {
   const ref = useRef();
 
@@ -70,8 +60,8 @@ const Editor = ({ data, onChange, editorBlock }) => {
       const editor = new EditorJS({
         holder: editorBlock,
         placeholder: 'Begin writing...',
-        data: data,
         tools: EDITOR_JS_TOOLS,
+        data: data,
         async onChange(api, event) {
           const data = await api.saver.save();
           onChange(data);
@@ -90,13 +80,32 @@ const Editor = ({ data, onChange, editorBlock }) => {
   return <div id={editorBlock} />;
 };
 
-export default function ArticleForm({ placeholder }) {
+//^ ARTICLE FORM COMPONENT
+//^ ARTICLE FORM COMPONENT
+
+export default function ArticleForm() {
+  const location = useLocation();
+  const dataReceived = location.state; // stores the article.id data from when user clicks Edit btn on the SingleArticle Page. Necessary for getting currentArticle value
+
+  const [loading, setLoading] = useState(true);
   const [articleTitle, setArticleTitle] = useState(''); // stores new article title
-  const [content, setContent] = useState(INITIAL_DATA); // stores new article data
+  const [currentArticle, setCurrentArticle] = useState(dataReceived);
+
+  // currentArticle holds all of the currently displayed articles data in an obj
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
 
-  console.log(articleTitle);
-  console.log(content);
+  const [content, setContent] = useState(currentArticle.content); // stores new article data
+
+  const tempParsedData = JSON.parse(
+    '{"time":1751409579527,"blocks":[{"id":"DSkQQ-m9MP","type":"header","data":{"text":"Temp Data - content still not working","level":2}},{"id":"DIVnZCKC3t","type":"paragraph","data":{"text":"<mark class=\\"cdx-marker\\">TEMPORARY DATA, whether your institution provides an account or you\'re using the free \\"Canvas Free-for-Teacher\\" option. For those affiliated with a school or university, you\'ll typically log in through your institution\'s specific Canvas URL, which often follows a format like [yourschoolname].instructure.com or canvas.[yourschoolname].edu. Your school will provide your unique username (which could be an email, student ID, or another login) and password. Some institutions integrate Canvas directly into their main website or portal, so you might access it after logging into your school\'s system.</mark>"}},{"id":"iqG9MCx7Xl","type":"paragraph","data":{"text":"<i>If you\'re unsure of your specific login credentials or URL, your IT department or a site administrator at your institution is the best resource for assistance. If you\'re using the \\"Canvas Free-for-Teacher\\" account, you can access it by navigating to https://canvas.instructure.com or https://k12.instructure.com. After creating your free account, you\'ll use the email address and</i> password you set up during registration to log in. Once inside Canvas, you\'ll be greeted by your Dashboard, which provides an overview of your courses.From here, you can begin building or importing course content, managing assignments, discussions, and quizzes, and inviting students to join your virtual classroom. Remember to publish both your individual modules and the entire course to make them visible and accessible to your students."}}],"version":"2.31.0-rc.7"}'
+  );
+  console.log('temp', tempParsedData);
+
+  // console.log(currentArticle.content);
+  // console.log('currentArticle ', currentArticle);
+  // console.log(currentArticle.content);
+  // console.log('content', content);
+  // console.log('dataReceived ', dataReceived);
 
   //* Variables for article table
   interface ArticleData {
@@ -125,161 +134,133 @@ export default function ArticleForm({ placeholder }) {
     view_count: 1,
   };
 
-  // console.log('next article_id will be: ' + newArticle.id);
-
+  //& Effect 1
+  //& Effect 1
   useEffect(() => {
     getLastArticleId(setLastId, supabase);
-
-    // create editor
-    //   const editor = new EditorJS({
-    //     /**
-    //      * Id of Element that should contain Editor instance
-    //      */
-    //     holder: 'editor',
-    //     placeholder: 'Write something',
-
-    //     /**
-    //      * Specifies the order of the tools that appear when text is highlighted
-    //      * - if true (or not specified), the order from 'tool' property will be used (default)
-    //      * - if an array of tool names, this order will be used
-    //      */
-    //     inlineToolbar: ['bold', 'italic', 'link', 'marker'],
-    //     // inlineToolbar: true,
-
-    //     /**
-    //      * Available Tools list.
-    //      * Pass Tool's class or Settings object for each Tool you want to use
-    //      */
-    //     //TODO add images,
-
-    //     //& TODO: Text links should open in a new page on click, currently user must command + click
-
-    //     //? TODO:  adding a link has poor color contrast
-
-    //     //? List of all tools available:
-    //     // https://github.com/editor-js/awesome-editorjs?tab=readme-ov-file
-    //     tools: {
-    //       header: Header,
-    //       list: List,
-    //       quote: Quote,
-    //       warning: Warning,
-
-    //       marker: Marker,
-    //       attaches: Attaches,
-    //       image: SimpleImage,
-    //       // embed only supports the following services: https://github.com/editor-js/embed
-    //       embed: Embed,
-    //     },
-    //     /**
-    //   //!Previously saved data that should be rendered
-    //  */
-    //     // data: {},
-    //   });
+    getArticlesByID(
+      (article) => {
+        setCurrentArticle(article);
+        setLoading(false);
+      },
+      supabase,
+      dataReceived
+    );
   }, []); // Empty dependency array, run only once
 
+  //& Effect 2
+  //& Effect 2
+  useEffect(() => {
+    if (currentArticle && currentArticle.content) {
+      const parsed = parseJsonData(currentArticle.content);
+      console.log('parsed content', parsed);
+      setContent(parsed);
+    }
+  }, [currentArticle]); // runs when currentArticle updates
+
   return (
-    <Form
-      style={{
-        width: '100%',
-        padding: '1rem',
-        outline: '2px solid #f2f2f5',
-      }}
-    >
-      <Form.Group
-        className='mb-3'
-        controlId='formBasicEmail'
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          // alignItems: 'center',
-          gap: '0.25rem',
-          width: '100%',
-          textAlign: 'left',
-        }}
-      >
-        <Form.Label style={{ width: '100%', textAlign: 'left' }}>
-          Article Title
-        </Form.Label>
-        <Form.Control
-          type='text'
-          placeholder='Enter Title'
-          onChange={(event) => {
-            setArticleTitle(event.target.value);
-            // console.log(articleTitle);
-          }}
-        />
-        <Form.Label
-          style={{ width: '100%', marginTop: '2rem', textAlign: 'left' }}
-        >
-          Article Content
-        </Form.Label>
-        {/* //! EDITOR */}
-        {/* <div
-          id='editor'
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <Form
           style={{
-            maxHeight: '85vh',
-            overflow: 'scroll',
-            scrollbarColor: '#000 #eee',
-            scrollbarWidth: 'thin',
+            width: '100%',
+            padding: '1rem',
             outline: '2px solid #f2f2f5',
           }}
-        ></div> */}
-        <Editor
-          data={content}
-          onChange={setContent}
-          editorBlock='editorjs-container'
-        />
-        <div
-          className='buttons-wrapper'
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            gap: '1rem',
-            width: '100%',
-            marginTop: '2rem',
-          }}
         >
-          <Button
-            id='form-publish-btn'
-            type='button'
+          <Form.Group
+            className='mb-3'
+            controlId='formBasicEmail'
             style={{
-              width: '8rem',
-              background: 'transparent',
-              border: '2px solid #83a18a',
-            }}
-            onClick={() => {
-              alert('save draft');
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              // alignItems: 'center',
+              gap: '0.25rem',
+              width: '100%',
+              textAlign: 'left',
             }}
           >
-            Save Draft
-          </Button>
-          <Button
-            id='form-draft-btn'
-            type='button'
-            style={{
-              width: '8rem',
-            }}
-            onClick={() => {
-              // Post article data to supabase
-              if (isContentNull(articleTitle, content)) {
-                // saveEditorData();
-                publishArticle(supabase, newArticle);
-              } else {
-                throw new Error(
-                  'Cannot post a new article without a title or body content'
-                );
+            <Form.Label style={{ width: '100%', textAlign: 'left' }}>
+              Article Title
+            </Form.Label>
+            <Form.Control
+              type='text'
+              placeholder={
+                currentArticle.title ? currentArticle.title : 'Enter Title'
               }
-              console.log('title ' + articleTitle);
-              console.log('content ' + content);
-            }}
-          >
-            Publish
-          </Button>
-        </div>
-      </Form.Group>
-    </Form>
+              onChange={(event) => {
+                setArticleTitle(event.target.value);
+              }}
+            />
+            <Form.Label
+              style={{ width: '100%', marginTop: '2rem', textAlign: 'left' }}
+            >
+              Article Content
+            </Form.Label>
+
+            {/* //& EDITOR */}
+            {/* //^ EDITOR */}
+            {/* //& EDITOR */}
+            {!content ? null : (
+              <Editor
+                data={content ? content : tempParsedData}
+                onChange={setContent}
+                editorBlock='editorjs-container'
+              />
+            )}
+            <div
+              className='buttons-wrapper'
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                gap: '1rem',
+                width: '100%',
+                marginTop: '2rem',
+              }}
+            >
+              <Button
+                id='form-publish-btn'
+                type='button'
+                style={{
+                  width: '8rem',
+                  background: 'transparent',
+                  border: '2px solid #83a18a',
+                }}
+                onClick={() => {
+                  alert('save draft');
+                }}
+              >
+                Save Draft
+              </Button>
+              <Button
+                id='form-draft-btn'
+                type='button'
+                style={{
+                  width: '8rem',
+                }}
+                onClick={() => {
+                  // Post article data to supabase
+                  if (isContentNull(articleTitle, content)) {
+                    // saveEditorData();
+                    publishArticle(supabase, newArticle);
+                  } else {
+                    throw new Error(
+                      'Cannot post a new article without a title or body content'
+                    );
+                  }
+                }}
+              >
+                Publish
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      )}
+    </>
   );
 }

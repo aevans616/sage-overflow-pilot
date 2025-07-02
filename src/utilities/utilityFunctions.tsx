@@ -90,7 +90,7 @@ export async function getArticles(setter?, backend, filter?) {
 export async function getArticlesByID(setter?, backend?, rowId) {
   const { data } = await backend.from('article').select('*').eq('id', rowId);
   setter(data[0]);
-  // console.log(data);
+  // console.log(data[0]);
 }
 //
 //
@@ -213,3 +213,12 @@ export async function incrementViewCount(viewCount: number, id: number) {
     console.log('Unexpected error incrementing view count', err);
   }
 }
+//
+//
+//
+//
+export const parseJsonData = (dataToProcess: string) => {
+  const JSON_OBJ = JSON.parse(dataToProcess);
+  console.log(JSON_OBJ);
+  return JSON_OBJ;
+};

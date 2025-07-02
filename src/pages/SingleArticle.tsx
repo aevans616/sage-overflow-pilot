@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getArticlesByID, supabase } from '../utilities/utilityFunctions';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
+import { Button } from 'react-bootstrap';
 import eye from '../assets/eye.png';
 
 export default function SingleArticle(props) {
   const [article, setArticle] = useState([]);
-
+  const navigate = useNavigate();
   const { id } = useParams(); // article id derived from the current url: eg singlearticle/16
+  // console.log(id);
 
-  // console.log(article);
   // console.log('id: ', id, typeof id);
   // console.log(article[0].id);
 
@@ -36,9 +37,36 @@ export default function SingleArticle(props) {
         height: '100vh',
         textAlign: 'left',
 
-        outline: '2px solid red',
+        // outline: '2px solid red',
       }}
     >
+      <div
+        className='edit-btn-wrapper'
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+          marginBottom: '2rem',
+          textAlign: 'left',
+          // outline: '2px solid green',
+        }}
+      >
+        {/* //^ EDIT BUTTON */}
+        <Button
+          id='edit-article-btn'
+          type='button'
+          style={{
+            width: '8rem',
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            const dataToPass = article.id;
+            navigate('/form', { state: dataToPass });
+          }}
+        >
+          Edit
+        </Button>
+      </div>
       <div
         className='title-author-views-wrapper'
         style={{
