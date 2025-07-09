@@ -4,13 +4,19 @@ export default function Sidebar() {
   return (
     <div
       style={{
-        width: '25vw',
-        minWidth: '25vw',
-        maxWidth: '25px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        minWidth: '225px',
+        maxWidth: '250px',
+        marginRight: '1.5rem',
         padding: '1rem',
+        textAlign: 'left',
         boxShadow: '-2px 2px 4px rgba(0, 0, 0, 0.15)',
+        // outline: '2px solid red',
       }}
-      className='sidebar-wrapper me-4 d-flex flex-column justify-content-start align-items-start bg-success  '
+      className='sidebar-wrapper bg-success  '
     >
       <h3
         style={{ width: '100%', textAlign: 'center' }}
@@ -26,7 +32,7 @@ export default function Sidebar() {
         link_1_title='What is Sage Overflow'
         link_1=''
         //
-        link_2_title='Frequently Asked Questions'
+        link_2_title="FAQ's"
         link_2=''
         //
         link_3_title=''

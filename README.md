@@ -6,6 +6,7 @@
 - [] Replace Editor with Novel package
 - [x] Install Router
 - [] Complete setup of routes
+- [] Setup Redux
 - [x] Build Home Page
 - [x] Build Articles Page
 - [] Rework Sidebar

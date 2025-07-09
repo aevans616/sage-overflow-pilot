@@ -20,7 +20,12 @@ const customLink = (name: string, className?: string) => {
     <Nav.Link
       href={`/${linkURL}`}
       className={className}
-      style={{ fontSize: '14px', minWidth: 'fit-content' }}
+      style={{
+        fontSize: '14px',
+        minWidth: 'fit-content',
+        margin: '0 0.5rem',
+        padding: '0',
+      }}
     >
       {name.toUpperCase()}
     </Nav.Link>

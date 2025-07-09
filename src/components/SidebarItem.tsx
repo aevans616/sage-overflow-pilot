@@ -12,7 +12,8 @@ export default function SidebarItem(props) {
         flexDirection: 'column',
         justifyContent: 'start',
         alignItems: 'start',
-        marginBottom: '1.5rem',
+        marginBottom: '1rem',
+        borderBottom: '2px solid #e1e1e1',
       }}
       className='app-section-wrapper'
     >
@@ -32,18 +33,23 @@ export default function SidebarItem(props) {
           setShowLinks(!showLinks);
         }}
       >
-        <h4
+        <h5
           style={{
-            marginTop: '1.5rem',
+            margin: '0.5rem 0 0 0',
             fontWeight: '400',
           }}
         >
           {props.sectionTitle}
-        </h4>
+        </h5>
         <img
           src={showLinks ? arrowDown : arrowRight}
           alt='arrow to open menu'
-          style={{ margin: '0 0 14px 10px', width: '14px', height: '16px' }}
+          style={{
+            margin: '0 0 4px 10px',
+            width: '11px',
+            height: '13px',
+            opacity: '70%',
+          }}
           className=''
         />
       </div>
@@ -56,7 +62,7 @@ export default function SidebarItem(props) {
           justifyContent: 'start',
           alignItems: 'start',
           gap: '0.25rem',
-          fontSize: '18px',
+          fontSize: '16px',
           cursor: 'pointer',
         }}
       >

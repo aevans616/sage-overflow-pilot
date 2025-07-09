@@ -72,7 +72,19 @@ export default function Articles() {
 
   return (
     <>
-      <div className='content-wrapper w-75 d-flex flex-column justify-content-center text-center mb-3 '>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          width: '75vw',
+          marginBottom: '1rem',
+          textAlign: 'center',
+          // outline: '2px solid red',
+        }}
+        className='content-wrapper mb-3 '
+      >
         <Navbar
           style={{
             width: '100%',
