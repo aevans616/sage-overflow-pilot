@@ -218,6 +218,10 @@ export async function incrementViewCount(viewCount: number, id: number) {
 //
 //
 export const parseJsonData = (dataToProcess: string) => {
+  if (!dataToProcess) {
+    console.log('dataToProcess: ', dataToProcess);
+    throw new Error('Error with provided argument');
+  }
   const JSON_OBJ = JSON.parse(dataToProcess);
   console.log(JSON_OBJ);
   return JSON_OBJ;
