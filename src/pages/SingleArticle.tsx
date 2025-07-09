@@ -47,8 +47,8 @@ export default function SingleArticle() {
             flexDirection: 'column',
             width: '100%',
             height: '100vh',
+            minHeight: 'fit-content',
             textAlign: 'left',
-
             // outline: '2px solid red',
           }}
         >
@@ -129,6 +129,7 @@ export default function SingleArticle() {
               width: 'fit-content',
               maxWidth: '60vw',
               padding: '0 0 0 1rem',
+              // overflow: 'scroll',
               // border: '2px solid red',
             }}
           >

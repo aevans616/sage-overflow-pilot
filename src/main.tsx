@@ -12,6 +12,7 @@ import Sidebar from './components/Sidebar.tsx';
 import Admin from './pages/Admin.tsx';
 import NotFound from './pages/NotFound.tsx';
 import ArticleForm from './pages/ArticleForm.tsx';
+import PublishNewArticle from './pages/PublishNewArticle.tsx';
 
 import '../custom-theme.scss';
 
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/admin' element={<Admin />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/form' element={<ArticleForm />} />
+        <Route path='/publish' element={<PublishNewArticle />} />
         {/* //^ 404 page must be the last link */}
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -166,7 +166,7 @@ export default function Admin() {
             padding: '0 1rem',
           }}
         >
-          <Link to='/form' style={{ width: '100%' }}>
+          <Link to='/publish' style={{ width: '100%' }}>
             <Button
               style={{
                 width: '100%',
