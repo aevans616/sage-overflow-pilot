@@ -13,6 +13,7 @@ import {
   supabase,
   formatTimestampToMonthDDYYYY,
   incrementViewCount,
+  calculateReadTime,
 } from '../utilities/utilityFunctions';
 
 export default function Articles() {
@@ -46,7 +47,7 @@ export default function Articles() {
     setArticle(sortedArticles);
   };
 
-  const sortCriteria = (criteria: string, highlight?: boolean) => (
+  const sortCriteria = (criteria: string) => (
     <a
       href=''
       style={{
@@ -60,6 +61,7 @@ export default function Articles() {
       onClick={(e) => {
         e.preventDefault();
         sortArticles(criteria);
+        setSelectedSortValue(criteria);
       }}
     >
       {criteria}
@@ -145,9 +147,9 @@ export default function Articles() {
           }}
         >
           <p>Sort By</p>
+          {sortCriteria('popular')}
           {sortCriteria('newest')}
           {sortCriteria('oldest')}
-          {sortCriteria('popular')}
         </div>
 
         <div
@@ -159,7 +161,8 @@ export default function Articles() {
               key={entry.id}
               imgURL={entry.image_url}
               cardTitle={entry.title}
-              cardContent={truncateText(entry.content)}
+              // cardContent={truncateText(entry.content)}
+              readTime={calculateReadTime(entry.content)}
               datePublished={formatTimestampToMonthDDYYYY(entry.created_at)}
               views={entry.view_count}
               handleClick={(e) => {

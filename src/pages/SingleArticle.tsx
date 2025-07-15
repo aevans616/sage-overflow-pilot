@@ -7,6 +7,7 @@ import {
   getArticlesByID,
   supabase,
   parseJsonData,
+  calculateReadTime,
 } from '../utilities/utilityFunctions';
 
 export default function SingleArticle() {
@@ -85,39 +86,67 @@ export default function SingleArticle() {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               width: '100%',
               margin: '0 0 2rem 0',
               height: 'fit-content',
               // border: '2px solid blue',
             }}
           >
-            <h2 className='m-0 ' style={{ width: '80%' }}>
+            <h2 className='m-0 ' style={{ width: '65%' }}>
               {article.title}
             </h2>
             <div
               className='author-views-wrapper'
               style={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 justifyContent: 'flex-end',
-                width: '20%',
-                maxWidth: '175px',
+                width: '35%',
+                maxWidth: '250px',
                 paddingRight: '1rem',
-                // border: '2px solid red',
+                // border: '2px solid green',
               }}
             >
-              <p className='m-0 me-1'>{`Author: ${article.author_id}`}</p>
-              <img
-                src={eye}
-                alt='eye / view count'
+              <div
                 style={{
-                  width: '18px',
-                  height: '18px',
-                  margin: '3px 10px 0 0',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
                 }}
-              />
-              <p className='m-0'>{article.view_count}</p>
+              >
+                <p
+                  style={{
+                    // width: 'fit-content',
+                    // maxHeight: '18px',
+                    margin: '0 1rem 0 0',
+                    // outline: '2px solid red',
+                  }}
+                >
+                  {calculateReadTime(article.content)}
+                </p>
+
+                <img
+                  src={eye}
+                  alt='eye / view count'
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    margin: '3px 4px 0 0',
+                  }}
+                />
+                <p className='m-0'>{article.view_count}</p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                }}
+                className='author'
+              >
+                <p className='m-0'>{`Author: ${article.author_id}`}</p>
+              </div>
             </div>
           </div>
           <div
@@ -135,7 +164,7 @@ export default function SingleArticle() {
           >
             {/* //^ EDITOR READONLY COMPONENT HERE */}
             <EditorReadOnly
-              data={content ? content : 'zzzz'}
+              data={content ? content : 'error'}
               onChange={null}
               editorBlock='editorjs-container'
             />

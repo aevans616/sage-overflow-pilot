@@ -226,3 +226,38 @@ export const parseJsonData = (dataToProcess: string) => {
   console.log(JSON_OBJ);
   return JSON_OBJ;
 };
+//
+//
+//
+//
+
+// Calculates the estimated read time of an article based on its word count.
+// The default reading speed is set to 265 words per minute, which is a common average.
+
+export const calculateReadTime = (
+  articleText: string,
+  wordsPerMinute: number = 265
+): number | string => {
+  // Check if articleText is valid
+  if (!articleText || typeof articleText !== 'string') {
+    return 0;
+  }
+
+  // Split the text by whitespace to get an array of words.
+  // Filter out any empty strings that might result from multiple spaces.
+  const words = articleText.split(/\s+/).filter((word) => word.length > 0);
+
+  // Get the total number of words
+  const wordCount = words.length;
+
+  // Calculate the raw read time in minutes
+  const rawReadTimeMinutes = wordCount / wordsPerMinute;
+
+  // Round to the nearest whole minute
+  const readTimeMinutes = Math.round(rawReadTimeMinutes);
+
+  // Ensure a minimum of 1 minute for any content, even if it's very short,
+  // as 0 minutes wouldn't be very informative.
+  console.log(Math.max(1, readTimeMinutes));
+  return `${Math.max(1, readTimeMinutes)} min read`;
+};

@@ -9,22 +9,20 @@ export default function ArticleCard(props) {
         style={{
           width: '100%',
           maxWidth: '100%',
-          height: '10rem',
+          height: '5rem',
           maxHeight: '21rem',
           padding: '0.4rem',
           borderRadius: '2',
           border: 'none',
           boxShadow: '-4px 4px 4px rgba(0, 0, 0, 0.03)',
+          // outline: '2px solid red',
         }}
       >
         <Card.Body
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            gap: '1rem',
-            padding: '1rem',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             textAlign: 'left',
           }}
         >
@@ -34,7 +32,7 @@ export default function ArticleCard(props) {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'space-between',
+              alignItems: 'center',
               width: '100%',
             }}
           >
@@ -53,11 +51,12 @@ export default function ArticleCard(props) {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'space-between',
+                alignItems: 'center',
                 width: 'fit-content',
                 fontSize: '15px',
               }}
             >
+              <p style={{ margin: '0 1rem 0 0' }}>{props.readTime}</p>
               <p style={{ margin: '0 1rem 0 0' }}>{props.datePublished}</p>
               <div
                 className='views-icon-text-wrapper'
@@ -74,10 +73,10 @@ export default function ArticleCard(props) {
                   style={{
                     width: '18px',
                     height: '18px',
-                    margin: '0 5px 18px 0',
+                    margin: '0 5px 0 0',
                   }}
                 />
-                <p>{props.views}</p>
+                <p style={{ marginBottom: '0' }}>{props.views}</p>
               </div>
             </div>
           </div>

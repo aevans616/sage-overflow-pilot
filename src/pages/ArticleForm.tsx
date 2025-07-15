@@ -255,7 +255,7 @@ export default function ArticleForm() {
                   }
                 }}
               >
-                Publish
+                Update
               </Button>
             </div>
           </Form.Group>
