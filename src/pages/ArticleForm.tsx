@@ -17,6 +17,7 @@ import {
   getLastArticleId,
   getArticlesByID,
   updateArticle,
+  deleteArticle,
   supabase,
   parseJsonData,
 } from '../utilities/utilityFunctions';
@@ -271,7 +272,7 @@ export default function ArticleForm() {
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 gap: '1rem',
                 width: '100%',
@@ -283,39 +284,71 @@ export default function ArticleForm() {
                 type='button'
                 style={{
                   width: '8rem',
+                  color: '#000',
                   background: 'transparent',
-                  border: '2px solid #83a18a',
+                  border: '2px solid crimson',
                 }}
                 onClick={() => {
-                  alert('save draft');
-                }}
-              >
-                Save Draft
-              </Button>
-              <Button
-                id='update-btn'
-                type='button'
-                style={{
-                  width: '8rem',
-                }}
-                disabled={!updateReady ? true : false}
-                onClick={() => {
-                  // First check if the articleTitle or content has been changed, if so set updateReady to true
+                  //TODO: this should archive instead of delete.
+                  // prompt user to confirm deletion
+                  const confirmation = prompt(
+                    'Are you sure you want to delete this article? Type YES to confirm.'
+                  );
+                  if (confirmation === 'YES') {
+                    deleteArticle(supabase, currentArticle.id);
 
-                  // Post article data to supabase
-                  if (isContentNull(articleTitle, content)) {
-                    // saveEditorData();
-                    // publishArticle(supabase, newArticle);
-                    updateArticle(supabase, newArticle, currentArticle.id);
+                    // alert('Article deleted successfully');
+                    // Redirect to articles page or home page
+                    window.location.href = '/articles';
                   } else {
-                    throw new Error(
-                      'Cannot post a new article without a title or body content'
-                    );
+                    alert('Deletion cancelled');
                   }
                 }}
               >
-                Update
+                Delete
               </Button>
+
+              <div className=''>
+                <Button
+                  id='save-draft-btn'
+                  type='button'
+                  style={{
+                    width: '8rem',
+                    marginRight: '1rem',
+                    background: 'transparent',
+                    border: '2px solid #83a18a',
+                  }}
+                  onClick={() => {
+                    alert('save draft');
+                  }}
+                >
+                  Save Draft
+                </Button>
+                <Button
+                  id='update-btn'
+                  type='button'
+                  style={{
+                    width: '8rem',
+                  }}
+                  disabled={!updateReady ? true : false}
+                  onClick={() => {
+                    // First check if the articleTitle or content has been changed, if so set updateReady to true
+
+                    // Post article data to supabase
+                    if (isContentNull(articleTitle, content)) {
+                      // saveEditorData();
+                      // publishArticle(supabase, newArticle);
+                      updateArticle(supabase, newArticle, currentArticle.id);
+                    } else {
+                      throw new Error(
+                        'Cannot post a new article without a title or body content'
+                      );
+                    }
+                  }}
+                >
+                  Update
+                </Button>
+              </div>
             </div>
           </Form.Group>
         </Form>

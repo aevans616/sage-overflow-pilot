@@ -119,6 +119,24 @@ export const updateArticle = async (
 //
 //
 //
+export const deleteArticle = async (backend: any, id: number) => {
+  try {
+    const { data, error } = await backend.from('article').delete().eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    alert('Article deleted successfully');
+    console.log('Item deleted:', data);
+  } catch (err) {
+    console.error('Error deleting item:', err.message);
+  }
+};
+//
+//
+//
+//
 export async function getArticles(setter?, backend, filter?) {
   const { data } = await backend.from('article').select(filter);
   setter(data);
