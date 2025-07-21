@@ -16,7 +16,7 @@ import Warning from '@editorjs/warning';
 import {
   getLastArticleId,
   getArticlesByID,
-  publishArticle,
+  updateArticle,
   supabase,
   parseJsonData,
 } from '../utilities/utilityFunctions';
@@ -25,14 +25,30 @@ console.clear();
 
 // Before pushing new data to the article table check if title and content are not undefined, null or empty string
 const isContentNull = (title: string, body: string): boolean => {
-  if (!title || !body) {
+  if (!title && !body) {
+    console.log('Cannot post: Title and Body are missing');
     return false;
   }
+
+  if (!title) {
+    console.log('Cannot post: Title is missing');
+    return false;
+  }
+
+  if (!body) {
+    console.log('Cannot post: Body is missing');
+    return false;
+  }
+
   return true;
 };
 
 //* EDITOR COMPONENT
 //* EDITOR COMPONENT
+
+//^
+// TODO: Currently you can only press 'Update' btn if the title has changed. Update it so that it changes if title or body content has changed.
+//^
 
 // TODO export to its own file
 const Editor = ({ data, onChange, editorBlock }) => {
@@ -88,24 +104,52 @@ export default function ArticleForm() {
   const dataReceived = location.state; // stores the article.id data from when user clicks Edit btn on the SingleArticle Page. Necessary for getting currentArticle value
 
   const [loading, setLoading] = useState(true);
-  const [articleTitle, setArticleTitle] = useState(''); // stores new article title
+
+  // tracks if the article is ready to be updated
+  const [updateReady, setUpdateReady] = useState(false);
+
   const [currentArticle, setCurrentArticle] = useState(dataReceived);
+
+  // stores new article title
+  const [articleTitle, setArticleTitle] = useState(currentArticle.title);
 
   // currentArticle holds all of the currently displayed articles data in an obj
   const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
 
   const [content, setContent] = useState(currentArticle.content); // stores new article data
 
-  const tempParsedData = JSON.parse(
-    '{"time":1751409579527,"blocks":[{"id":"DSkQQ-m9MP","type":"header","data":{"text":"Temp Data - content still not working","level":2}},{"id":"DIVnZCKC3t","type":"paragraph","data":{"text":"<mark class=\\"cdx-marker\\">TEMPORARY DATA, whether your institution provides an account or you\'re using the free \\"Canvas Free-for-Teacher\\" option. For those affiliated with a school or university, you\'ll typically log in through your institution\'s specific Canvas URL, which often follows a format like [yourschoolname].instructure.com or canvas.[yourschoolname].edu. Your school will provide your unique username (which could be an email, student ID, or another login) and password. Some institutions integrate Canvas directly into their main website or portal, so you might access it after logging into your school\'s system.</mark>"}},{"id":"iqG9MCx7Xl","type":"paragraph","data":{"text":"<i>If you\'re unsure of your specific login credentials or URL, your IT department or a site administrator at your institution is the best resource for assistance. If you\'re using the \\"Canvas Free-for-Teacher\\" account, you can access it by navigating to https://canvas.instructure.com or https://k12.instructure.com. After creating your free account, you\'ll use the email address and</i> password you set up during registration to log in. Once inside Canvas, you\'ll be greeted by your Dashboard, which provides an overview of your courses.From here, you can begin building or importing course content, managing assignments, discussions, and quizzes, and inviting students to join your virtual classroom. Remember to publish both your individual modules and the entire course to make them visible and accessible to your students."}}],"version":"2.31.0-rc.7"}'
-  );
-  console.log('temp', tempParsedData);
+  const determineTitleValue = () => {
+    // console.log(articleTitle);
+    if (articleTitle === '') {
+      return '';
+    }
 
-  // console.log(currentArticle.content);
-  // console.log('currentArticle ', currentArticle);
-  // console.log(currentArticle.content);
-  // console.log('content', content);
-  // console.log('dataReceived ', dataReceived);
+    if (articleTitle) {
+      return articleTitle;
+    } else if (currentArticle && currentArticle.title) {
+      return currentArticle.title;
+    }
+  };
+
+  const hasContentChanged = () => {
+    if (
+      articleTitle !== currentArticle.title ||
+      content !== currentArticle.content
+    ) {
+      setUpdateReady(true);
+    } else {
+      setUpdateReady(false);
+    }
+  };
+
+  const printRelevantData = () => {
+    // console.log(currentArticle.content);
+    console.log('currentArticle ', currentArticle);
+    console.log('content', content);
+    // console.log('dataReceived ', dataReceived);
+  };
+
+  // printRelevantData();
 
   //* Variables for article table
   interface ArticleData {
@@ -153,10 +197,17 @@ export default function ArticleForm() {
   useEffect(() => {
     if (currentArticle && currentArticle.content) {
       const parsed = parseJsonData(currentArticle.content);
-      console.log('parsed content', parsed);
+      // console.log('parsed content', parsed);
       setContent(parsed);
     }
   }, [currentArticle]); // runs when currentArticle updates
+
+  //& Effect 3
+  //& Effect 3
+
+  // useEffect(() => {
+  //   hasContentChanged();
+  // }, [articleTitle, currentArticle, content]);
 
   return (
     <>
@@ -188,11 +239,15 @@ export default function ArticleForm() {
             </Form.Label>
             <Form.Control
               type='text'
-              placeholder={
-                currentArticle.title ? currentArticle.title : 'Enter Title'
-              }
+              placeholder='Enter Title'
+              value={determineTitleValue()}
               onChange={(event) => {
-                setArticleTitle(event.target.value);
+                if (event.target.value.length === 0) {
+                  setArticleTitle('');
+                } else {
+                  setArticleTitle(event.target.value);
+                }
+                setUpdateReady(true);
               }}
             />
             <Form.Label
@@ -206,7 +261,7 @@ export default function ArticleForm() {
             {/* //& EDITOR */}
             {!content ? null : (
               <Editor
-                data={content ? content : tempParsedData}
+                data={content ? content : null}
                 onChange={setContent}
                 editorBlock='editorjs-container'
               />
@@ -224,7 +279,7 @@ export default function ArticleForm() {
               }}
             >
               <Button
-                id='form-publish-btn'
+                id='save-draft-btn'
                 type='button'
                 style={{
                   width: '8rem',
@@ -238,16 +293,20 @@ export default function ArticleForm() {
                 Save Draft
               </Button>
               <Button
-                id='form-draft-btn'
+                id='update-btn'
                 type='button'
                 style={{
                   width: '8rem',
                 }}
+                disabled={!updateReady ? true : false}
                 onClick={() => {
+                  // First check if the articleTitle or content has been changed, if so set updateReady to true
+
                   // Post article data to supabase
                   if (isContentNull(articleTitle, content)) {
                     // saveEditorData();
-                    publishArticle(supabase, newArticle);
+                    // publishArticle(supabase, newArticle);
+                    updateArticle(supabase, newArticle, currentArticle.id);
                   } else {
                     throw new Error(
                       'Cannot post a new article without a title or body content'

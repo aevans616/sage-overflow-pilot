@@ -45,7 +45,11 @@ export const getLastArticleId = async (setState: any, backend: any) => {
 //
 //
 
-export const publishArticle = async (backend: any, contentData: any) => {
+export const publishArticle = async (
+  backend: any,
+  contentData: any,
+  id: number
+) => {
   const CD = contentData;
   try {
     const { data, error } = await backend
@@ -73,6 +77,42 @@ export const publishArticle = async (backend: any, contentData: any) => {
     console.log('New item inserted:', data);
   } catch (err) {
     console.error('Error inserting item:', err.message);
+  }
+};
+//
+//
+//
+//
+export const updateArticle = async (
+  backend: any,
+  contentData: any,
+  id: number
+) => {
+  const CD = contentData;
+  try {
+    const { data, error } = await backend
+      .from('article')
+      .update({
+        // The object keys should match your table column names
+        // author_id: CD.author_id,
+        // last_editor_id: CD.last_editor_id,
+        title: CD.title,
+        content: CD.content,
+        // created_at: CD.created_at,
+        // is_published: CD.is_published,
+        // last_modified: CD.last_modified,
+        // view_count: CD.view_count,
+      })
+      .eq('id', id)
+      .select(); // .select() returns the updated record(s)
+
+    if (error) {
+      throw error;
+    }
+
+    console.log('Item updated:', data);
+  } catch (err) {
+    console.error('Error updating item:', err.message);
   }
 };
 //
@@ -223,7 +263,7 @@ export const parseJsonData = (dataToProcess: string) => {
     throw new Error('Error with provided argument');
   }
   const JSON_OBJ = JSON.parse(dataToProcess);
-  console.log(JSON_OBJ);
+  // console.log(JSON_OBJ);
   return JSON_OBJ;
 };
 //
@@ -258,6 +298,6 @@ export const calculateReadTime = (
 
   // Ensure a minimum of 1 minute for any content, even if it's very short,
   // as 0 minutes wouldn't be very informative.
-  console.log(Math.max(1, readTimeMinutes));
+  // console.log(Math.max(1, readTimeMinutes));
   return `${Math.max(1, readTimeMinutes)} min read`;
 };
