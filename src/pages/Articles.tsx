@@ -9,7 +9,6 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   getArticles,
-  truncateText,
   supabase,
   formatTimestampToMonthDDYYYY,
   incrementViewCount,

@@ -24,34 +24,9 @@ import {
 
 console.clear();
 
-// Before pushing new data to the article table check if title and content are not undefined, null or empty string
-const isContentNull = (title: string, body: string): boolean => {
-  if (!title && !body) {
-    console.log('Cannot post: Title and Body are missing');
-    return false;
-  }
-
-  if (!title) {
-    console.log('Cannot post: Title is missing');
-    return false;
-  }
-
-  if (!body) {
-    console.log('Cannot post: Body is missing');
-    return false;
-  }
-
-  return true;
-};
-
 //* EDITOR COMPONENT
 //* EDITOR COMPONENT
 
-//^
-// TODO: Currently you can only press 'Update' btn if the title has changed. Update it so that it changes if title or body content has changed.
-//^
-
-// TODO export to its own file
 const Editor = ({ data, onChange, editorBlock }) => {
   const ref = useRef();
 
@@ -263,7 +238,10 @@ export default function ArticleForm() {
             {!content ? null : (
               <Editor
                 data={content ? content : null}
-                onChange={setContent}
+                onChange={(event) => {
+                  setContent(event);
+                  setUpdateReady(true);
+                }}
                 editorBlock='editorjs-container'
               />
             )}
@@ -333,16 +311,17 @@ export default function ArticleForm() {
                   disabled={!updateReady ? true : false}
                   onClick={() => {
                     // First check if the articleTitle or content has been changed, if so set updateReady to true
-
-                    // Post article data to supabase
-                    if (isContentNull(articleTitle, content)) {
-                      // saveEditorData();
-                      // publishArticle(supabase, newArticle);
-                      updateArticle(supabase, newArticle, currentArticle.id);
-                    } else {
-                      throw new Error(
-                        'Cannot post a new article without a title or body content'
-                      );
+                    if (updateReady) {
+                      // Post article data to supabase
+                      if (content || articleTitle) {
+                        // saveEditorData();
+                        // publishArticle(supabase, newArticle);
+                        updateArticle(supabase, newArticle, currentArticle.id);
+                      } else {
+                        throw new Error(
+                          'Cannot post a new article without a title or body content'
+                        );
+                      }
                     }
                   }}
                 >
