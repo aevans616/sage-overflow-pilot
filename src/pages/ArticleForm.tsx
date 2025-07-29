@@ -14,7 +14,6 @@ import SimpleImage from '@editorjs/simple-image';
 import Warning from '@editorjs/warning';
 
 import {
-  getLastArticleId,
   getArticlesByID,
   updateArticle,
   deleteArticle,
@@ -84,13 +83,11 @@ export default function ArticleForm() {
   // tracks if the article is ready to be updated
   const [updateReady, setUpdateReady] = useState(false);
 
+  // currentArticle holds all of the currently displayed articles data in an obj
   const [currentArticle, setCurrentArticle] = useState(dataReceived);
 
   // stores new article title
   const [articleTitle, setArticleTitle] = useState(currentArticle.title);
-
-  // currentArticle holds all of the currently displayed articles data in an obj
-  const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
 
   const [content, setContent] = useState(currentArticle.content); // stores new article data
 
@@ -129,7 +126,7 @@ export default function ArticleForm() {
 
   //* Variables for article table
   interface ArticleData {
-    id: number;
+    // id is generated in Supabase using random uuid
     author_id: number;
     last_editor_id: number;
     title: string;
@@ -142,7 +139,7 @@ export default function ArticleForm() {
   }
 
   const newArticle: ArticleData = {
-    id: lastId,
+    // id is generated in Supabase using random uuid
     author_id: 101, // hardcoded until login functionality / user roster is built
     last_editor_id: 101,
     title: articleTitle,
@@ -157,7 +154,6 @@ export default function ArticleForm() {
   //& Effect 1
   //& Effect 1
   useEffect(() => {
-    getLastArticleId(setLastId, supabase);
     getArticlesByID(
       (article) => {
         setCurrentArticle(article);
@@ -270,12 +266,12 @@ export default function ArticleForm() {
                   //TODO: this should archive instead of delete.
                   // prompt user to confirm deletion
                   const confirmation = prompt(
-                    'Are you sure you want to delete this article? Type YES to confirm.'
+                    'To confirm you want to delete this article, type "YES".'
                   );
                   if (confirmation === 'YES') {
                     deleteArticle(supabase, currentArticle.id);
 
-                    // alert('Article deleted successfully');
+                    alert('Article deleted successfully');
                     // Redirect to articles page or home page
                     window.location.href = '/articles';
                   } else {

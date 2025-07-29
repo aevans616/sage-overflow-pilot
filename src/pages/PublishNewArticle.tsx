@@ -13,7 +13,6 @@ import SimpleImage from '@editorjs/simple-image';
 import Warning from '@editorjs/warning';
 
 import {
-  getLastArticleId,
   getArticlesByID,
   publishArticle,
   supabase,
@@ -87,16 +86,15 @@ export default function PublishNewArticle() {
   const dataReceived = location.state; // stores the article.id data from when user clicks Edit btn on the SingleArticle Page. Necessary for getting currentArticle value
 
   const [articleTitle, setArticleTitle] = useState(''); // stores new article title
-  const [currentArticle, setCurrentArticle] = useState(dataReceived);
 
   // currentArticle holds all of the currently displayed articles data in an obj
-  const [lastId, setLastId] = useState(1); // for storing the latest article id in Supabase
+  const [currentArticle, setCurrentArticle] = useState(dataReceived);
 
   const [content, setContent] = useState(); // stores new article data
 
   //* Variables for article table
   interface ArticleData {
-    id: number;
+    // id is generated in Supabase using random uuid
     author_id: number;
     last_editor_id: number;
     title: string;
@@ -109,7 +107,7 @@ export default function PublishNewArticle() {
   }
 
   const newArticle: ArticleData = {
-    id: lastId,
+    // id is generated in Supabase using random uuid
     author_id: 101, // hardcoded until login functionality / user roster is built
     last_editor_id: 101,
     title: articleTitle,
@@ -124,7 +122,6 @@ export default function PublishNewArticle() {
   //& Effect 1
   //& Effect 1
   useEffect(() => {
-    getLastArticleId(setLastId, supabase);
     getArticlesByID(
       (article) => {
         setCurrentArticle(article);
