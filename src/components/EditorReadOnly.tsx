@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-// import JoditEditor from 'jodit-react';
 import EditorJS from '@editorjs/editorjs';
 //* each editor tool must be installed one at a time: npm i @editorjs/header
 import Header from '@editorjs/header';
